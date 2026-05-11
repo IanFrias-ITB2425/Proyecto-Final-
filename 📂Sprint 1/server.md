@@ -1,75 +1,439 @@
-# Documentación del Proyecto Final - Infraestructura Cloud
+# Documentación Técnica – Infraestructura Cloud del Proyecto Final
 
-Este documento detalla la configuración del servidor y la base de datos para el Proyecto Final.
+> **Proyecto:** CyberArena – Plataforma de Ciberseguridad  
+> **Proveedor Cloud:** Amazon Web Services (AWS)  
+> **Sistema Operativo:** Ubuntu 24.04 LTS  
+> **Fecha de despliegue:** Mayo 2026
 
-### 1. Resumen de la Instancia AWS (EC2)
-Se ha desplegado una instancia **t3.micro** con Ubuntu 24.04 LTS. En la captura se observa la IP pública asignada y el estado "En ejecución", lo cual confirma que el servidor está operativo.
-![Resumen AWS](../Imagenes/0.png)
+---
 
-### 2. Configuración de Seguridad (Firewall)
-Se han configurado las **Security Groups** en el panel de AWS para permitir el tráfico de entrada esencial:
-* **Puerto 80 (HTTP):** Acceso web.
-* **Puerto 22 (SSH):** Gestión remota.
-* **Puerto 443 (HTTPS):** Acceso web seguro.
-![Reglas de Entrada](../Imagenes/1.png)
+## Índice
 
-### 3. Conexión Remota vía SSH
-Acceso al servidor mediante el terminal local utilizando una llave privada `.pem`. Se han asignado los permisos correctos (`chmod +x`) antes de iniciar la sesión como usuario `ubuntu`.
-![Conexión SSH](../Imagenes/2.png)
+1. [Resumen de la Instancia AWS (EC2)](#1-resumen-de-la-instancia-aws-ec2)
+2. [Configuración de Seguridad (Firewall)](#2-configuración-de-seguridad-firewall)
+3. [Conexión Remota vía SSH](#3-conexión-remota-vía-ssh)
+4. [Instalación del Servidor Web Nginx](#4-instalación-del-servidor-web-nginx)
+5. [Instalación de MariaDB](#5-instalación-de-mariadb)
+6. [Configuración de PHP y Extensiones](#6-configuración-de-php-y-extensiones)
+7. [Securización de la Base de Datos](#7-securización-de-la-base-de-datos)
+8. [Gestión de Usuarios y Permisos SQL](#8-gestión-de-usuarios-y-permisos-sql)
+9. [Estructura de Tablas (Logs)](#9-estructura-de-tablas-logs)
+10. [Despliegue del Código Fuente](#10-despliegue-del-código-fuente)
+11. [Instalación de Certbot para HTTPS](#11-instalación-de-certbot-para-https)
+12. [Configuración de Dominio Dinámico (DuckDNS)](#12-configuración-de-dominio-dinámico-duckdns)
+13. [Obtención y Despliegue del Certificado SSL](#13-obtención-y-despliegue-del-certificado-ssl)
+14. [Configuración del Virtual Host en Nginx](#14-configuración-del-virtual-host-en-nginx)
+15. [Dashboard de Control "CyberArena"](#15-dashboard-de-control-cyberarena)
+16. [Estructura Final de la Base de Datos](#16-estructura-final-de-la-base-de-datos)
+17. [Verificación del Sistema Operativo](#17-verificación-del-sistema-operativo)
 
-### 4. Instalación del Servidor Web Nginx
-Instalación del motor de servidor web **Nginx**. Este será el encargado de servir la aplicación PHP a los usuarios.
-![Nginx](../Imagenes/3.png)
+---
 
-### 5. Instalación de MariaDB
-Despliegue del motor de base de datos **MariaDB Server**. Se ha verificado que el sistema descarga y prepara los paquetes correctamente desde los repositorios oficiales.
-![MariaDB](../Imagenes/4.png)
+## 1. Resumen de la Instancia AWS (EC2)
 
-### 6. Configuración de PHP y Extensiones
-Instalación del motor **PHP** junto con el módulo `php-mysql` necesario para que el código PHP pueda interactuar con la base de datos MariaDB.
-![PHP](../Imagenes/5.png)
+Se ha desplegado una instancia **t3.micro** en la región de AWS correspondiente, ejecutando **Ubuntu 24.04 LTS** como sistema operativo base. La instancia se encuentra en estado **"En ejecución"** (*Running*), con una IP pública asignada que permite la conectividad entrante desde Internet.
 
-### 7. Securización de la Base de Datos
-Ejecución del comando `mysql_secure_installation`. En este paso se define la contraseña del usuario root y se eliminan accesos inseguros por defecto.
-![Seguridad DB](../Imagenes/6.png)
+**Especificaciones de la instancia:**
 
-### 8. Gestión de Usuarios y Permisos SQL
-Creación de la base de datos `arena_db` y el usuario específico `arena_sys`. Se han otorgado todos los privilegios sobre la base de datos necesaria para el proyecto.
-![Usuarios SQL](../Imagenes/7.png)
+| Parámetro | Valor |
+|---|---|
+| Tipo de instancia | `t3.micro` |
+| Sistema operativo | Ubuntu 24.04 LTS |
+| Estado | En ejecución ✅ |
+| Arquitectura | x86_64 |
+| Almacenamiento | EBS (Elastic Block Store) |
 
-### 9. Estructura de Tablas (Logs)
-Creación de la tabla `logs_ataques` dentro de `arena_db`. Esta tabla incluye campos como `id`, `origen_ip`, `tipo_incidente` y un `timestamp` automático.
-![Tablas](../Imagenes/8.png)
+> La elección de `t3.micro` responde a los requisitos del proyecto: suficiente capacidad de cómputo para un entorno de pruebas y producción ligera, con elegibilidad dentro del nivel gratuito de AWS.
 
-### 10. Despliegue del Código Fuente
-Uso de `git clone` para descargar el repositorio directamente en la ruta `/var/www/html/`. Se han ajustado los permisos de propietario (`chown`) al usuario `www-data` para que el servidor web pueda leer los archivos.
-![Git Clone](../Imagenes/9.png)
+![Resumen de la Instancia AWS EC2](../Imagenes/0.png)
 
+---
 
-### 11. Instalación de Certbot para HTTPS
-Preparación del servidor para el cifrado SSL/TLS. Se instalan los paquetes de `certbot` y su plugin para Nginx, asegurando que las comunicaciones con el servidor sean seguras.
-![Instalación Certbot](../Imagenes/10.png)
+## 2. Configuración de Seguridad (Firewall)
 
-### 12. Configuración de Dominio Dinámico (DuckDNS)
-Se ha vinculado la IP pública de la instancia de AWS (`34.234.144.104`) con el dominio `cyberarena-rehan.duckdns.org`. Esto permite acceder al servidor mediante un nombre fácil de recordar en lugar de la dirección IP.
-![Configuración DNS](../Imagenes/11.png)
+Se han definido las reglas del **Security Group** asociado a la instancia EC2. Este actúa como firewall virtual a nivel de red, controlando el tráfico de entrada (inbound) y salida (outbound) de la instancia.
 
-### 13. Obtención y Despliegue del Certificado SSL
-Ejecución de Certbot para obtener un certificado gratuito de Let's Encrypt. El proceso configura automáticamente Nginx para redirigir el tráfico HTTP a HTTPS de forma segura.
-![Certificado SSL](../Imagenes/12.png)
+**Reglas de entrada configuradas:**
 
-### 14. Configuración del Virtual Host en Nginx
-Ajuste del parámetro `server_name` en el archivo de configuración de Nginx para que coincida exactamente con el dominio registrado en DuckDNS.
-![Server Name](../Imagenes/13.png)
+| Puerto | Protocolo | Origen | Descripción |
+|---|---|---|---|
+| 22 | TCP | 0.0.0.0/0 | Acceso SSH para administración remota |
+| 80 | TCP | 0.0.0.0/0 | Tráfico HTTP público |
+| 443 | TCP | 0.0.0.0/0 | Tráfico HTTPS cifrado (SSL/TLS) |
 
-### 15. Dashboard de Control "CyberArena"
-Vista del panel de control operativo. Se confirma que los servicios de **Web Server (Nginx)**, **Database (MariaDB)** y **SIEM Telemetry (Wazuh)** están en estado "Nominal" u "Online".
-![Dashboard](../Imagenes/14.png)
+> **Nota de seguridad:** En producción se recomienda restringir el acceso SSH (puerto 22) a IPs de administración conocidas para reducir la superficie de ataque. En el contexto de este proyecto se ha mantenido abierto para facilitar la gestión.
 
-### 16. Estructura Final de la Base de Datos
-Creación de las tablas principales para la aplicación: `usuarios` (con roles de admin/viewer) y `alertas_reales` (con soporte para logs en formato JSON). La base de datos `arena_db` queda completamente operativa con 3 tablas.
-![Tablas Finales](../Imagenes/15.png)
+![Reglas de Entrada del Security Group](../Imagenes/1.png)
 
-### 17. Verificación del Sistema Operativo
-Resumen del sistema tras la configuración: Ubuntu 24.04.4 LTS funcionando en AWS con una carga de sistema mínima, confirmando la eficiencia del despliegue.
-![Info Sistema](../Imagenes/16.png)
+---
+
+## 3. Conexión Remota vía SSH
+
+El acceso al servidor se realiza desde el terminal local mediante el protocolo **SSH**, autenticando con la llave privada `.pem` generada en el momento de crear la instancia en AWS.
+
+**Procedimiento de conexión:**
+
+```bash
+# Asignar permisos correctos a la clave privada
+chmod 400 clave-proyecto.pem
+
+# Conectar al servidor como usuario ubuntu
+ssh -i "clave-proyecto.pem" ubuntu@<IP_PUBLICA>
+```
+
+> El uso de autenticación por clave pública/privada (PKI) es más seguro que la autenticación por contraseña, ya que elimina el riesgo de ataques de fuerza bruta sobre credenciales.
+
+![Conexión SSH al servidor](../Imagenes/2.png)
+
+---
+
+## 4. Instalación del Servidor Web Nginx
+
+Se ha instalado **Nginx** como servidor web principal. Nginx actúa como reverse proxy y servidor de contenido estático, procesando las peticiones HTTP/HTTPS entrantes y redirigiéndolas al intérprete PHP.
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+```
+
+**Ventajas de Nginx frente a Apache en este contexto:**
+- Menor consumo de memoria en instancias de recursos limitados (`t3.micro`)
+- Mejor rendimiento bajo carga concurrente mediante arquitectura basada en eventos
+- Integración nativa con Certbot para la gestión de certificados SSL
+
+![Instalación de Nginx](../Imagenes/3.png)
+
+---
+
+## 5. Instalación de MariaDB
+
+Se ha desplegado **MariaDB Server** como motor de base de datos relacional. MariaDB es un fork comunitario de MySQL que ofrece plena compatibilidad con las instrucciones SQL estándar y mejoras de rendimiento adicionales.
+
+```bash
+sudo apt install -y mariadb-server
+sudo systemctl enable mariadb
+sudo systemctl start mariadb
+```
+
+El sistema descargó y preparó los paquetes correctamente desde los repositorios oficiales de Ubuntu Noble (24.04), confirmando la integridad de la instalación.
+
+![Instalación de MariaDB](../Imagenes/4.png)
+
+---
+
+## 6. Configuración de PHP y Extensiones
+
+Se ha instalado el intérprete **PHP** junto con las extensiones necesarias para la integración con Nginx y MariaDB:
+
+```bash
+sudo apt install -y php-fpm php-mysql php-cli php-curl php-json
+```
+
+**Extensiones instaladas y su función:**
+
+| Extensión | Función |
+|---|---|
+| `php-fpm` | FastCGI Process Manager – interfaz entre Nginx y PHP |
+| `php-mysql` | Conector PHP ↔ MariaDB/MySQL |
+| `php-cli` | Ejecución de scripts PHP desde línea de comandos |
+| `php-curl` | Soporte para peticiones HTTP externas desde PHP |
+| `php-json` | Manejo nativo de estructuras JSON |
+
+> La comunicación entre Nginx y PHP se realiza a través de un socket Unix (`php-fpm`), lo que mejora el rendimiento respecto al uso de sockets TCP.
+
+![Instalación de PHP y extensiones](../Imagenes/5.png)
+
+---
+
+## 7. Securización de la Base de Datos
+
+Se ejecutó el script de seguridad `mysql_secure_installation` para endurecer la instalación por defecto de MariaDB, eliminando configuraciones inseguras que vienen habilitadas de serie.
+
+```bash
+sudo mysql_secure_installation
+```
+
+**Acciones realizadas durante el proceso:**
+
+| Acción | Resultado |
+|---|---|
+| Definir contraseña para usuario `root` | ✅ Configurado |
+| Eliminar usuarios anónimos | ✅ Eliminados |
+| Deshabilitar login root remoto | ✅ Deshabilitado |
+| Eliminar base de datos de prueba (`test`) | ✅ Eliminada |
+| Recargar tabla de privilegios | ✅ Aplicado |
+
+![Securización de la base de datos](../Imagenes/6.png)
+
+---
+
+## 8. Gestión de Usuarios y Permisos SQL
+
+Se creó la base de datos del proyecto y un usuario dedicado con privilegios mínimos necesarios, siguiendo el principio de **mínimo privilegio** (*least privilege*).
+
+```sql
+-- Crear la base de datos del proyecto
+CREATE DATABASE arena_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Crear usuario dedicado para la aplicación
+CREATE USER 'arena_sys'@'localhost' IDENTIFIED BY '<contraseña_segura>';
+
+-- Otorgar privilegios únicamente sobre la base de datos del proyecto
+GRANT ALL PRIVILEGES ON arena_db.* TO 'arena_sys'@'localhost';
+
+-- Aplicar los cambios de privilegios
+FLUSH PRIVILEGES;
+```
+
+> **Buena práctica:** El usuario `arena_sys` tiene acceso exclusivo a `arena_db` y solo puede conectarse desde `localhost`. Nunca se utiliza el usuario `root` desde la aplicación.
+
+![Gestión de usuarios y permisos SQL](../Imagenes/7.png)
+
+---
+
+## 9. Estructura de Tablas (Logs)
+
+Se definió la tabla `logs_ataques` dentro de `arena_db` para registrar los eventos de seguridad detectados por la plataforma. La estructura incluye los campos esenciales para la trazabilidad de incidentes:
+
+```sql
+CREATE TABLE logs_ataques (
+    id            INT AUTO_INCREMENT PRIMARY KEY,
+    origen_ip     VARCHAR(45)  NOT NULL,
+    tipo_incidente VARCHAR(100) NOT NULL,
+    descripcion   TEXT,
+    timestamp     DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+**Descripción de los campos:**
+
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `id` | INT AUTO_INCREMENT | Identificador único del registro |
+| `origen_ip` | VARCHAR(45) | IP de origen del ataque (soporta IPv4 e IPv6) |
+| `tipo_incidente` | VARCHAR(100) | Clasificación del tipo de ataque detectado |
+| `descripcion` | TEXT | Detalle adicional del incidente |
+| `timestamp` | DATETIME | Marca de tiempo automática del registro |
+
+![Estructura de la tabla logs_ataques](../Imagenes/8.png)
+
+---
+
+## 10. Despliegue del Código Fuente
+
+El código fuente de la aplicación se descargó directamente desde el repositorio Git al directorio raíz del servidor web:
+
+```bash
+# Clonar el repositorio en el directorio web
+sudo git clone <URL_REPOSITORIO> /var/www/html/
+
+# Ajustar propietario al usuario del servidor web
+sudo chown -R www-data:www-data /var/www/html/
+
+# Establecer permisos correctos
+sudo chmod -R 755 /var/www/html/
+```
+
+> La asignación del propietario a `www-data` es fundamental para que el proceso de Nginx pueda leer y servir los archivos de la aplicación sin requerir permisos elevados.
+
+![Despliegue del código fuente vía Git](../Imagenes/9.png)
+
+---
+
+## 11. Instalación de Certbot para HTTPS
+
+Se preparó el servidor para la gestión de certificados SSL/TLS mediante **Certbot**, la herramienta oficial de la organización ISRG para trabajar con certificados de **Let's Encrypt**.
+
+```bash
+sudo apt install -y certbot python3-certbot-nginx
+```
+
+**Componentes instalados:**
+
+| Paquete | Función |
+|---|---|
+| `certbot` | Cliente ACME para obtención y renovación de certificados |
+| `python3-certbot-nginx` | Plugin de integración con Nginx para configuración automática |
+
+> Let's Encrypt emite certificados válidos por 90 días. Certbot configura automáticamente una tarea de renovación periódica (`systemd timer`) para mantener el certificado siempre vigente.
+
+![Instalación de Certbot](../Imagenes/10.png)
+
+---
+
+## 12. Configuración de Dominio Dinámico (DuckDNS)
+
+Se ha vinculado la IP pública de la instancia EC2 (`34.234.144.104`) con el dominio dinámico `cyberarena-rehan.duckdns.org` a través del servicio **DuckDNS**.
+
+**Motivación del uso de DuckDNS:**
+- Las IPs públicas de instancias EC2 son dinámicas y pueden cambiar al reiniciar la instancia
+- DuckDNS proporciona un FQDN (Fully Qualified Domain Name) estable y gratuito
+- Certbot requiere un nombre de dominio válido para emitir el certificado SSL
+
+| Parámetro | Valor |
+|---|---|
+| Dominio | `cyberarena-rehan.duckdns.org` |
+| IP vinculada | `34.234.144.104` |
+| Tipo de registro | A (IPv4) |
+
+![Configuración del dominio DuckDNS](../Imagenes/11.png)
+
+---
+
+## 13. Obtención y Despliegue del Certificado SSL
+
+Se ejecutó Certbot para obtener el certificado SSL gratuito de Let's Encrypt y configurar automáticamente Nginx para servir el tráfico en HTTPS:
+
+```bash
+sudo certbot --nginx -d cyberarena-rehan.duckdns.org
+```
+
+**Resultado del proceso:**
+- Certbot verificó la propiedad del dominio mediante el desafío ACME HTTP-01
+- Obtuvo e instaló el certificado en `/etc/letsencrypt/live/cyberarena-rehan.duckdns.org/`
+- Configuró automáticamente Nginx para redirigir todo el tráfico HTTP (puerto 80) a HTTPS (puerto 443)
+- Programó la renovación automática del certificado cada 60 días
+
+> El cifrado SSL/TLS garantiza la confidencialidad e integridad de las comunicaciones entre el cliente y el servidor, previniendo ataques de tipo *man-in-the-middle* (MITM).
+
+![Obtención del certificado SSL con Certbot](../Imagenes/12.png)
+
+---
+
+## 14. Configuración del Virtual Host en Nginx
+
+Se ajustó el archivo de configuración del virtual host de Nginx para que coincida exactamente con el dominio registrado, garantizando el correcto enrutamiento de las peticiones:
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name cyberarena-rehan.duckdns.org;
+
+    root /var/www/html;
+    index index.php index.html;
+
+    # Certificados SSL gestionados por Certbot
+    ssl_certificate     /etc/letsencrypt/live/cyberarena-rehan.duckdns.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/cyberarena-rehan.duckdns.org/privkey.pem;
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+    }
+}
+```
+
+Tras modificar la configuración, se validó y recargó el servicio:
+
+```bash
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+![Configuración del Virtual Host en Nginx](../Imagenes/13.png)
+
+---
+
+## 15. Dashboard de Control "CyberArena"
+
+El panel de control de la plataforma **CyberArena** muestra en tiempo real el estado de los servicios críticos de la infraestructura:
+
+| Servicio | Tecnología | Estado |
+|---|---|---|
+| Web Server | Nginx | 🟢 Nominal |
+| Database | MariaDB | 🟢 Nominal |
+| SIEM Telemetry | Wazuh Agent | 🟢 Online |
+
+El dashboard permite al administrador verificar de forma rápida la disponibilidad de todos los componentes del stack sin necesidad de acceder por SSH al servidor.
+
+![Dashboard de Control CyberArena](../Imagenes/14.png)
+
+---
+
+## 16. Estructura Final de la Base de Datos
+
+La base de datos `arena_db` quedó completamente operativa con **3 tablas** que soportan la lógica de negocio de la plataforma:
+
+**Tabla `usuarios`** – Gestión de accesos a la plataforma:
+```sql
+CREATE TABLE usuarios (
+    id       INT AUTO_INCREMENT PRIMARY KEY,
+    nombre   VARCHAR(100) NOT NULL,
+    email    VARCHAR(150) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    rol      ENUM('admin', 'viewer') DEFAULT 'viewer',
+    creado_en DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+**Tabla `alertas_reales`** – Registro de alertas con soporte para datos JSON:
+```sql
+CREATE TABLE alertas_reales (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    tipo      VARCHAR(100) NOT NULL,
+    datos_raw JSON,
+    procesado TINYINT(1) DEFAULT 0,
+    recibido_en DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+**Tabla `logs_ataques`** – Eventos de seguridad detectados (ver sección 9).
+
+> El uso del tipo de dato `JSON` nativo de MariaDB (a partir de la versión 10.2) permite almacenar y consultar datos semiestructurados directamente desde SQL, ideal para logs de SIEM con esquema variable.
+
+![Estructura Final de la Base de Datos](../Imagenes/15.png)
+
+---
+
+## 17. Verificación del Sistema Operativo
+
+Como paso final de validación, se verificó el estado general del sistema tras completar toda la configuración:
+
+```bash
+uname -a       # Versión del kernel
+lsb_release -a # Distribución y versión del SO
+uptime         # Tiempo de actividad y carga del sistema
+free -h        # Uso de memoria RAM
+df -h          # Uso del almacenamiento
+```
+
+**Resumen del sistema:**
+
+| Parámetro | Valor |
+|---|---|
+| Distribución | Ubuntu 24.04.4 LTS |
+| Entorno | AWS EC2 |
+| Carga del sistema | Mínima (< 0.1) |
+| Estado general | ✅ Operativo |
+
+La baja carga del sistema confirma que la instancia `t3.micro` es suficiente para el entorno actual y que todos los servicios están funcionando con eficiencia.
+
+![Verificación del Sistema Operativo](../Imagenes/16.png)
+
+---
+
+## Resumen del Despliegue
+
+La infraestructura cloud del proyecto CyberArena ha quedado completamente operativa. A continuación se presenta el stack tecnológico desplegado y el estado de cada componente:
+
+| Capa | Tecnología | Versión | Estado |
+|---|---|---|---|
+| **Cloud** | Amazon Web Services (EC2) | t3.micro | ✅ |
+| **SO** | Ubuntu LTS | 24.04.4 | ✅ |
+| **Servidor Web** | Nginx | Latest | ✅ |
+| **Base de datos** | MariaDB Server | Latest | ✅ |
+| **Lenguaje** | PHP + php-fpm | Latest | ✅ |
+| **Certificado SSL** | Let's Encrypt (Certbot) | – | ✅ |
+| **DNS dinámico** | DuckDNS | – | ✅ |
+| **SIEM** | Wazuh Agent | – | ✅ |
+| **Control de versiones** | Git | – | ✅ |
+
+**Arquitectura del flujo de petición:**
+
+```
+Usuario → DNS (DuckDNS) → IP Pública AWS → Security Group (puerto 443)
+       → Nginx (SSL/TLS termination) → PHP-FPM → MariaDB (arena_db)
+```
+
+Todos los servicios están configurados para iniciarse automáticamente con el sistema (`systemctl enable`), garantizando la disponibilidad del servicio tras reinicios de la instancia.
