@@ -51,3 +51,55 @@ Se finalizó el proceso con un escaneo de la herramienta **Lynis**, obteniendo u
 
 ![Reglas de Entrada](../imagenes%20rehan/25.png)
 
+## 10. Análisis de Vulnerabilidades y Sugerencias
+Tras la auditoría con Lynis, se procedió a revisar las sugerencias específicas en el área de protección contra malware y configuración del firewall para seguir elevando el nivel de hardening.
+
+![Reglas de Entrada](../imagenes%20rehan/26.png)
+
+## 11. Configuración de Monitoreo de Integridad (Syscheck)
+Se configuró el módulo **Syscheck** en el agente de Wazuh para realizar un seguimiento de cambios en archivos críticos. Se definieron rutas estratégicas como `/etc` y `/var/www/html` con una frecuencia de escaneo optimizada.
+
+![Reglas de Entrada](../imagenes%20rehan/27.png)
+
+## 12. Ajustes de Notificación y Logging
+Se configuró el archivo de gestión de logs (`ossec.conf`) para asegurar que el sistema capture y envíe las alertas con el nivel de detalle necesario para la correlación de eventos en el servidor central.
+
+![Reglas de Entrada](../imagenes%20rehan/28.png)
+
+## 13. Sincronización de Configuración
+Se reinició el servicio del agente de Wazuh para aplicar los cambios realizados en la monitorización de integridad y las nuevas políticas de logging.
+
+![Reglas de Entrada](../imagenes%20rehan/29.png)
+
+## 14. Acceso al Dashboard Centralizado
+Se inició sesión en el panel de control de Wazuh para supervisar el estado global de la infraestructura y confirmar la recepción de datos de los agentes.
+
+![Reglas de Entrada](../imagenes%20rehan/30.png)
+
+## 15. Verificación de Agentes Activos
+Se comprobó que el inventario de agentes reflejara los nodos correctamente conectados y sincronizados, garantizando que el servidor Ubuntu esté bajo supervisión constante.
+
+![Reglas de Entrada](../imagenes%20rehan/31.png)
+
+## 16. Visualización de Alertas de Seguridad
+Acceso a la sección de eventos de seguridad, donde se clasifican los hallazgos por nivel de impacto, permitiendo una respuesta rápida ante posibles incidentes detectados.
+
+![Reglas de Entrada](../imagenes%20rehan/32.png)
+
+## 17. Análisis Geográfico de Amenazas
+Utilización de mapas de calor para identificar el origen de las conexiones bloqueadas por el WAF, ayudando a identificar patrones de ataque desde regiones específicas.
+
+![Reglas de Entrada](../imagenes%20rehan/33.png)
+
+## 18. Dashboard de Eventos Web (ModSecurity)
+Visualización gráfica de los ataques bloqueados por ModSecurity. El dashboard permite desglosar los intentos de inyección SQL y otros ataques de capa 7 detectados.
+
+![Reglas de Entrada](../imagenes%20rehan/34.png)
+
+## 19. Registro de Integridad de Archivos (FIM)
+Detalle del inventario de cambios en archivos, donde el sistema registra cada modificación en el sistema de ficheros, crucial para detectar posibles persistencias o intrusiones.
+
+![Reglas de Entrada](../imagenes%20rehan/35.png)
+
+
+
