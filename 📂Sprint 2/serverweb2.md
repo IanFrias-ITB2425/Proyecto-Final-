@@ -28,7 +28,7 @@
 
 Se ejecutó `sudo apt update` seguido de `sudo apt install -y libapache2-mod-security2` para instalar el módulo ModSecurity en Apache. El sistema descargó e instaló los paquetes necesarios desde los repositorios oficiales de Ubuntu Noble (24.04).
 
-![Instalación de ModSecurity](../imagenes%20rehan/17.png)
+![Instalación de ModSecurity](../Imagenes/17.png)
 
 ---
 
@@ -46,7 +46,7 @@ sudo sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/modsecurity/m
 
 Este paso es crítico: sin él, ModSecurity solo **detecta** pero no **bloquea** los ataques.
 
-![Activación ModSecurity](../imagenes%20rehan/18.png)
+![Activación ModSecurity](../Imagenes/18.png)
 
 ---
 
@@ -61,7 +61,7 @@ sudo apt install -y modsecurity-crs
 
 La reinstalación confirmó que la versión `3.3.5-2` ya era la más reciente. Se indicó que el paquete `apache2-data` fue instalado automáticamente y puede eliminarse con `sudo apt autoremove`.
 
-![Reinstalación CRS](../imagenes%20rehan/19.png)
+![Reinstalación CRS](../Imagenes/19.png)
 
 ---
 
@@ -83,7 +83,7 @@ curl -I -k "https://cyberarena-admin.duckdns.org/"
 
 ModSecurity bloquea los ataques sin afectar el tráfico legítimo.
 
-![Prueba de Bloqueo](../imagenes%20rehan/20.png)
+![Prueba de Bloqueo](../Imagenes/20.png)
 
 ---
 
@@ -100,7 +100,7 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 - **915 reglas** cargadas localmente desde el CRS de OWASP.
 - Sintaxis de Nginx correcta y prueba de configuración exitosa.
 
-![Validación Nginx](../imagenes%20rehan/21.png)
+![Validación Nginx](../Imagenes/21.png)
 
 ---
 
@@ -124,7 +124,7 @@ Include /etc/modsecurity/whitelist.conf
 
 Se activó el motor de reglas en modo **On** (bloqueo activo) y se incluyó el Core Rule Set (CRS) de OWASP junto con una whitelist personalizada.
 
-![Configuración ModSecurity](../imagenes%20rehan/22.png)
+![Configuración ModSecurity](../Imagenes/22.png)
 
 ---
 
@@ -140,7 +140,7 @@ ModSecurity detectó y bloqueó varios intentos de inyección SQL (SQLi) proveni
 
 Los intentos se registraron en múltiples ocasiones entre las 16:17 y las 16:41 del 04/05/2026.
 
-![Logs ModSecurity SQLi](../imagenes%20rehan/23.png)
+![Logs ModSecurity SQLi](../Imagenes/23.png)
 
 ---
 
@@ -164,7 +164,7 @@ Se configuró el agente Wazuh HIDS en `/var/ossec/etc/ossec.conf` para conectars
 
 El agente envía eventos al servidor Wazuh en la IP interna `10.0.1.96` por el puerto `1514/TCP`.
 
-![Configuración Wazuh](../imagenes%20rehan/24.png)
+![Configuración Wazuh](../Imagenes/24.png)
 
 ---
 
@@ -181,7 +181,7 @@ Antes de aplicar las medidas de hardening, se realizó una auditoría inicial co
 
 Esta mejora de **7 puntos** refleja el impacto positivo de las configuraciones aplicadas.
 
-![Lynis Estado Inicial](../imagenes%20rehan/25.png)
+![Lynis Estado Inicial](../Imagenes/25.png)
 
 ---
 
@@ -195,7 +195,7 @@ MaxAuthTries 3
 
 Esto reduce la ventana de oportunidad para ataques de fuerza bruta sobre el servicio SSH, complementando la protección de Fail2Ban.
 
-![MaxAuthTries](../imagenes%20rehan/26.png)
+![MaxAuthTries](../Imagenes/26.png)
 
 ---
 
@@ -210,7 +210,7 @@ X11Forwarding no
 
 Deshabilitar el reenvío TCP y X11 impide que un atacante use el servidor SSH como proxy o para ejecutar aplicaciones gráficas remotas.
 
-![SSH Forwarding](../imagenes%20rehan/27.png)
+![SSH Forwarding](../Imagenes/27.png)
 
 ---
 
@@ -226,7 +226,7 @@ LogLevel VERBOSE
 
 El nivel `VERBOSE` registra información detallada de cada intento de conexión, incluyendo las claves usadas, lo que facilita la auditoría y detección de intrusiones.
 
-![SSH Logging](../imagenes%20rehan/28.png)
+![SSH Logging](../Imagenes/28.png)
 
 ---
 
@@ -244,7 +244,7 @@ PASS_WARN_AGE   7
 - **PASS_MIN_DAYS**: No se puede cambiar la contraseña antes de 7 días.
 - **PASS_WARN_AGE**: El usuario recibe aviso 7 días antes de la expiración.
 
-![Política de Caducidad](../imagenes%20rehan/29.png)
+![Política de Caducidad](../Imagenes/29.png)
 
 ---
 
@@ -259,7 +259,7 @@ SHA_CRYPT_MAX_ROUNDS 10000
 
 Aumentar las rondas de hash hace que los ataques de fuerza bruta sean significativamente más costosos computacionalmente.
 
-![SHA Crypt Rounds](../imagenes%20rehan/30.png)
+![SHA Crypt Rounds](../Imagenes/30.png)
 
 ---
 
@@ -279,7 +279,7 @@ net.ipv4.conf.all.send_redirects = 0
 net.ipv4.conf.all.log_martians = 1
 ```
 
-![Parámetros del Kernel](../imagenes%20rehan/31.png)
+![Parámetros del Kernel](../Imagenes/31.png)
 
 ---
 
@@ -299,7 +299,7 @@ bantime  = 1h
 
 Con esta configuración, tras **3 intentos fallidos** de autenticación, la IP queda bloqueada durante **1 hora**.
 
-![Configuración Fail2Ban](../imagenes%20rehan/32.png)
+![Configuración Fail2Ban](../Imagenes/32.png)
 
 ---
 
@@ -318,7 +318,7 @@ Tras aplicar todas las medidas de hardening, se ejecutó Lynis 3.0.9 y se obtuvo
 
 Los logs se almacenan en `/var/log/lynis.log` y `/var/log/lynis-report.dat`.
 
-![Lynis Estado Final](../imagenes%20rehan/33.png)
+![Lynis Estado Final](../Imagenes/33.png)
 
 ---
 
@@ -334,7 +334,7 @@ Se ejecutó `sudo mysql_secure_installation` para asegurar la instalación de Ma
 | Deshabilitar login root remoto | Y | Éxito |
 | Eliminar base de datos de prueba | Y | Éxito |
 
-![Securización de MariaDB](../imagenes%20rehan/34.png)
+![Securización de MariaDB](../Imagenes/34.png)
 
 ---
 
@@ -347,7 +347,7 @@ Se creó el script `/usr/local/bin/backup_cyberarena.sh` con las siguientes func
 - **Backup del código web**: comprime `/var/www/html` en un `.tar.gz` con fecha.
 - **Limpieza automática**: elimina backups de más de 7 días para evitar llenar el disco.
 
-![Script de Backup](../imagenes%20rehan/35.png)
+![Script de Backup](../Imagenes/35.png)
 
 ---
 
@@ -373,7 +373,7 @@ Se configuró una tarea programada en `crontab` para ejecutar automáticamente e
 
 La salida estándar y los errores se redirigen al archivo `/var/log/backup_cyberarena.log` para facilitar la auditoría y detección de fallos en el proceso automático de backups.
 
-![Configuración Cron Backup](../imagenes%20rehan/36.png)
+![Configuración Cron Backup](../Imagenes/36.png)
 
 ---
 
@@ -401,7 +401,7 @@ web_backup_2026-05-05_13-48.tar.gz
 
 Los backups fueron almacenados correctamente en `/root/backups`, validando el correcto funcionamiento del sistema de respaldo automatizado.
 
-![Verificación Backup](../imagenes%20rehan/37.png)
+![Verificación Backup](../Imagenes/37.png)
 
 ---
 
