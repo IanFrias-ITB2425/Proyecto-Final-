@@ -24,7 +24,7 @@ Se editaron los archivos de configuración para integrar el motor de OWASP y las
 
 ![Reglas de Entrada](../imagenes%20rehan/20.png)
 
-## 7. Monitoreo de Eventos en Tiempo Real (Logs)
+## 5. Monitoreo de Eventos en Tiempo Real (Logs)
 El análisis de los logs del sistema confirma la detección de ataques de inyección SQL (SQLi), mostrando detalles técnicos como el ID de la regla activada y la IP del atacante.
 
 ![Reglas de Entrada](../imagenes%20rehan/21.png)
@@ -37,7 +37,7 @@ Se realizaron peticiones mediante `curl` para validar la efectividad del WAF:
 
 ![Reglas de Entrada](../imagenes%20rehan/22.png)
 
-## 5. Validación de la Configuración del Servicio
+## 7. Validación de la Configuración del Servicio
 Se ejecutó un test de sintaxis en el servidor web (Nginx) para confirmar que las nuevas reglas y el módulo de seguridad estuvieran correctamente cargados sin errores.
 
 
