@@ -14,30 +14,32 @@ Para que el WAF sea efectivo, se cambió la directiva `SecRuleEngine` de `Detect
 
 ![Reglas de Entrada](../imagenes%20rehan/18.png)
 
-## 3. Despliegue de OWASP Core Rule Set (CRS)
-Se instaló el conjunto de reglas básicas de OWASP (CRS), el cual proporciona protecciones genéricas contra ataques como SQLi, XSS y otras vulnerabilidades del Top 10 de OWASP.
+## 3. Implementación del Core Rule Set (CRS) de OWASP
+Se descargó e instaló el conjunto de reglas base de OWASP (v3.3.5-2), que proporciona protección contra las vulnerabilidades web más críticas (Inyección, XSS, etc.).
 
 ![Reglas de Entrada](../imagenes%20rehan/19.png)
 
-## 4. Integración de Reglas en la Configuración
-Se configuró el archivo `modsecurity.conf` para incluir el "cerebro" de OWASP y las reglas de ataque, además de preparar un archivo de whitelist para gestionar excepciones.
-
-![Reglas de Entrada](../imagenes%20rehan/22.png)
-
-## 5. Verificación de la Configuración
-Antes de reiniciar el servicio, se ejecutó una prueba de sintaxis en Nginx para asegurar que la integración del módulo ModSecurity fuera correcta y no afectara la disponibilidad del servicio.
-
-![Reglas de Entrada](../imagenes%20rehan/21.png)
-
-## 6. Pruebas de Ataque y Validación (Bloqueo 403)
-Se realizaron pruebas de inyección SQL mediante `curl`.
-- **Intento de ataque:** Se recibió un código **403 Forbidden**, confirmando que el WAF está funcionando.
-- **Acceso legítimo:** La página principal cargó con un código **200 OK**.
+## 4. Configuración y Carga de Reglas
+Se editaron los archivos de configuración para integrar el motor de OWASP y las reglas de ataque, además de prever un archivo de exclusiones (whitelist) para optimizar el tráfico.
 
 ![Reglas de Entrada](../imagenes%20rehan/20.png)
 
-## 7. Análisis de Logs de Seguridad
-El archivo de errores muestra detalladamente los eventos de bloqueo. Se observa la detección de "SQL Injection Attack" con severidad crítica, activada por la regla `942100`.
+## 7. Monitoreo de Eventos en Tiempo Real (Logs)
+El análisis de los logs del sistema confirma la detección de ataques de inyección SQL (SQLi), mostrando detalles técnicos como el ID de la regla activada y la IP del atacante.
+
+![Reglas de Entrada](../imagenes%20rehan/21.png)
+
+## 6. Pruebas de Penetración y Validación de Respuesta
+Se realizaron peticiones mediante `curl` para validar la efectividad del WAF:
+- **Intento Malicioso:** Resultado **403 Forbidden** (Bloqueado con éxito).
+- **Tráfico Legítimo:** Resultado **200 OK** (Acceso permitido).
+
+
+![Reglas de Entrada](../imagenes%20rehan/22.png)
+
+## 5. Validación de la Configuración del Servicio
+Se ejecutó un test de sintaxis en el servidor web (Nginx) para confirmar que las nuevas reglas y el módulo de seguridad estuvieran correctamente cargados sin errores.
+
 
 ![Reglas de Entrada](../imagenes%20rehan/23.png)
 
