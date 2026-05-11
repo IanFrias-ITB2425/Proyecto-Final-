@@ -55,7 +55,7 @@ docker-compose up -d
 
 > **Captura — Editor nano con `docker-compose.yml` configurado:**
 >
-> ![docker-compose config](screenshots/02-docker-compose-config.png)
+> ![Docker Compose](../Imagenes%20Laboratotio/Dockercompose.png)
 
 ---
 
