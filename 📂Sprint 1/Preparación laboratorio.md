@@ -69,7 +69,7 @@ Los contenedores `cyberarena_dvwa` y `cyberarena_juiceshop` aparecen como `Up`:
 
 > **Captura — Salida de `docker ps`:**
 >
-> ![docker ps](screenshots/03-docker-ps.png)
+> ![Docker PS](../Imagenes%20Laboratotio/Dockerps.png)
 
 Verificación adicional via `curl`:
 
