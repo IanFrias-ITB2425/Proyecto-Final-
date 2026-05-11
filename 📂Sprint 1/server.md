@@ -44,3 +44,32 @@ Creación de la tabla `logs_ataques` dentro de `arena_db`. Esta tabla incluye ca
 ### 10. Despliegue del Código Fuente
 Uso de `git clone` para descargar el repositorio directamente en la ruta `/var/www/html/`. Se han ajustado los permisos de propietario (`chown`) al usuario `www-data` para que el servidor web pueda leer los archivos.
 ![Git Clone](../imagenes%20rehan/9.png)
+
+
+### 11. Instalación de Certbot para HTTPS
+Preparación del servidor para el cifrado SSL/TLS. Se instalan los paquetes de `certbot` y su plugin para Nginx, asegurando que las comunicaciones con el servidor sean seguras.
+![Instalación Certbot](../imagenes%20rehan/10.png)
+
+### 12. Configuración de Dominio Dinámico (DuckDNS)
+Se ha vinculado la IP pública de la instancia de AWS (`34.234.144.104`) con el dominio `cyberarena-rehan.duckdns.org`. Esto permite acceder al servidor mediante un nombre fácil de recordar en lugar de la dirección IP.
+![Configuración DNS](../imagenes%20rehan/11.png)
+
+### 13. Obtención y Despliegue del Certificado SSL
+Ejecución de Certbot para obtener un certificado gratuito de Let's Encrypt. El proceso configura automáticamente Nginx para redirigir el tráfico HTTP a HTTPS de forma segura.
+![Certificado SSL](../imagenes%20rehan/12.png)
+
+### 14. Configuración del Virtual Host en Nginx
+Ajuste del parámetro `server_name` en el archivo de configuración de Nginx para que coincida exactamente con el dominio registrado en DuckDNS.
+![Server Name](../imagenes%20rehan/13.png)
+
+### 15. Dashboard de Control "CyberArena"
+Vista del panel de control operativo. Se confirma que los servicios de **Web Server (Nginx)**, **Database (MariaDB)** y **SIEM Telemetry (Wazuh)** están en estado "Nominal" u "Online".
+![Dashboard](../imagenes%20rehan/14.png)
+
+### 16. Estructura Final de la Base de Datos
+Creación de las tablas principales para la aplicación: `usuarios` (con roles de admin/viewer) y `alertas_reales` (con soporte para logs en formato JSON). La base de datos `arena_db` queda completamente operativa con 3 tablas.
+![Tablas Finales](../imagenes%20rehan/15.png)
+
+### 17. Verificación del Sistema Operativo
+Resumen del sistema tras la configuración: Ubuntu 24.04.4 LTS funcionando en AWS con una carga de sistema mínima, confirmando la eficiencia del despliegue.
+![Info Sistema](../imagenes%20rehan/16.png)
