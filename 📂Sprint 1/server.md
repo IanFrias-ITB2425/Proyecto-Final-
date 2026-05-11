@@ -386,32 +386,6 @@ CREATE TABLE alertas_reales (
 
 ---
 
-## 17. Verificación del Sistema Operativo
-
-Como paso final de validación, se verificó el estado general del sistema tras completar toda la configuración:
-
-```bash
-uname -a       # Versión del kernel
-lsb_release -a # Distribución y versión del SO
-uptime         # Tiempo de actividad y carga del sistema
-free -h        # Uso de memoria RAM
-df -h          # Uso del almacenamiento
-```
-
-**Resumen del sistema:**
-
-| Parámetro | Valor |
-|---|---|
-| Distribución | Ubuntu 24.04.4 LTS |
-| Entorno | AWS EC2 |
-| Carga del sistema | Mínima (< 0.1) |
-| Estado general | ✅ Operativo |
-
-La baja carga del sistema confirma que la instancia `t3.micro` es suficiente para el entorno actual y que todos los servicios están funcionando con eficiencia.
-
-![Verificación del Sistema Operativo](../Imagenes/16.png)
-
----
 
 ## Resumen del Despliegue
 
