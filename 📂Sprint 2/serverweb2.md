@@ -351,6 +351,61 @@ Se creó el script `/usr/local/bin/backup_cyberarena.sh` con las siguientes func
 
 ---
 
+---
+
+## 20. Configuración de Cron para Backups Automáticos
+
+Se configuró una tarea programada en `crontab` para ejecutar automáticamente el script de backup todos los días a las 03:00 AM:
+
+```bash
+00 03 * * * /usr/local/bin/backup_cyberarena.sh >> /var/log/backup_cyberarena.log 2>&1
+```
+
+### Explicación de la tarea programada
+
+| Campo | Valor | Descripción |
+|---|---|---|
+| Minuto | `00` | Ejecutar en el minuto 0 |
+| Hora | `03` | Ejecutar a las 03:00 AM |
+| Día del mes | `*` | Todos los días |
+| Mes | `*` | Todos los meses |
+| Día de la semana | `*` | Todos los días de la semana |
+
+La salida estándar y los errores se redirigen al archivo `/var/log/backup_cyberarena.log` para facilitar la auditoría y detección de fallos en el proceso automático de backups.
+
+![Configuración Cron Backup](../imagenes%20rehan/36.png)
+
+---
+
+## 21. Ejecución y Verificación del Backup
+
+Se ejecutó manualmente el script `/usr/local/bin/backup_cyberarena.sh` para verificar su correcto funcionamiento:
+
+```bash
+sudo /usr/local/bin/backup_cyberarena.sh
+```
+
+Posteriormente, se listaron los archivos generados en el directorio `/root/backups`, confirmando la creación correcta de los respaldos:
+
+```bash
+db_backup_2026-05-05_13-48.sql
+web_backup_2026-05-05_13-48.tar.gz
+```
+
+### Archivos generados
+
+| Archivo | Descripción |
+|---|---|
+| `db_backup_*.sql` | Backup de la base de datos MariaDB |
+| `web_backup_*.tar.gz` | Backup comprimido del directorio web |
+
+Los backups fueron almacenados correctamente en `/root/backups`, validando el correcto funcionamiento del sistema de respaldo automatizado.
+
+![Verificación Backup](../imagenes%20rehan/37.png)
+
+---
+
+
 ## Resumen del Proceso
 
 El proceso de hardening aplicado al servidor cubre las siguientes capas de seguridad:
