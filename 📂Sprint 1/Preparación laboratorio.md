@@ -13,8 +13,7 @@ sudo apt install -y ca-certificates curl gnupg lsb-release
 
 > **Captura — Instalación de dependencias:**
 >
-> ![Docker install](screenshots/01-docker-install.png)
-
+> ![Docker](../Imagenes%20Laboratotio/Docker.png)
 ---
 
 ## 2. Configuración de `docker-compose.yml`
