@@ -21,6 +21,10 @@
 17. [Auditoría con Lynis (Estado Final)](#17-auditoría-con-lynis-estado-final)
 18. [Securización de MariaDB](#18-securización-de-mariadb)
 19. [Script de Backup Automatizado](#19-script-de-backup-automatizado)
+20. [Configuración de Cron para Backups Automáticos](#20-configuración-de-cron-para-backups-automáticos)
+21. [Ejecución y Verificación del Backup](#21-ejecución-y-verificación-del-backup)
+22. [Logs de ModSecurity – Detección de SQLi (08/05/2026)](#22-logs-de-modsecurity--detección-de-sqli-08052026)
+23. [Logs de ModSecurity – Detección de XSS (08/05/2026)](#23-logs-de-modsecurity--detección-de-xss-08052026)
 
 ---
 
@@ -402,6 +406,36 @@ web_backup_2026-05-05_13-48.tar.gz
 Los backups fueron almacenados correctamente en `/root/backups`, validando el correcto funcionamiento del sistema de respaldo automatizado.
 
 ![Verificación Backup](../Imagenes/37.png)
+
+---
+
+## 22. Logs de ModSecurity – Detección de SQLi (08/05/2026)
+
+ModSecurity detectó y bloqueó un intento de inyección SQL (SQLi) proveniente de la IP `79.117.174.171` contra el servidor `cyberarena-admin.duckdns.org`. El log registra:
+
+- **Código de respuesta**: 403 (Acceso denegado)
+- **Fase de detección**: Phase 2
+- **Regla activada**: `REQUEST-942-APPLICATION-ATTACK-SQLI.conf` (ID 942100)
+- **Payload detectado**: `?id=1'%20OR%20'1'='1` (bypass de autenticación SQL clásico)
+- **Severidad**: 2 (OWASP CRS 3.3.5)
+- **Fecha/hora**: 2026/05/08 13:46:26
+
+![Logs ModSecurity SQLi 08/05](../Imagenes/38.png)
+
+---
+
+## 23. Logs de ModSecurity – Detección de XSS (08/05/2026)
+
+ModSecurity detectó y bloqueó un intento de Cross-Site Scripting (XSS) proveniente de la IP `79.117.174.171` contra el servidor `cyberarena-admin.duckdns.org`. El log registra:
+
+- **Código de respuesta**: 403 (Acceso denegado)
+- **Fase de detección**: Phase 2
+- **Regla activada**: `REQUEST-941-APPLICATION-ATTACK-XSS.conf` (ID 941100)
+- **Payload detectado**: `?buscar=<script>alert('Hackeado')</script>` (XSS reflejado clásico)
+- **Severidad**: 2 (OWASP CRS 3.3.5)
+- **Fecha/hora**: 2026/05/08 13:43:57
+
+![Logs ModSecurity XSS 08/05](../Imagenes/39.png)
 
 ---
 
