@@ -1,43 +1,42 @@
-# Documentación Proyecto Final - Sprint 2: Seguridad y Endurecimiento
 
-En esta fase se ha implementado una capa de seguridad avanzada (WAF) y un sistema de monitorización de integridad y eventos (SIEM).
+# Documentación Proyecto Final - Sprint 2: Seguridad y SIEM
 
-### 18. Acceso SSH y Configuración de Red
-Conexión inicial al entorno de trabajo. Se valida el acceso a la terminal y la preparación de la ruta de los archivos PEM para gestionar las instancias de la infraestructura.
+### 17. Acceso a la terminal y preparación de claves
+Inicio de la sesión en el entorno local. Se observa la lista de archivos donde se encuentra la clave `.pem` necesaria para la administración de las instancias de AWS.
 ![Paso 17](../imagenes%20rehan/17.png)
 
-### 19. Instalación de ModSecurity (libapache2-mod-security2)
-Proceso de instalación del motor de **ModSecurity**. Aunque el paquete tiene nombre de Apache, se configura como un módulo dinámico para actuar como Firewall de Aplicación Web en nuestro servidor.
+### 18. Instalación de dependencias de ModSecurity
+Ejecución de `sudo apt install` para instalar el conector de ModSecurity y las librerías necesarias para el filtrado de tráfico en el servidor web.
 ![Paso 18](../imagenes%20rehan/18.png)
 
-### 20. Configuración del CRS (Core Rule Set)
-Edición y preparación de las reglas del **OWASP ModSecurity Core Rule Set**. En esta captura se observa la configuración de las reglas base que protegen contra inyecciones y ataques de fuerza bruta.
+### 19. Configuración del Core Rule Set (CRS) de OWASP
+Configuración de las reglas de seguridad. Se muestra la edición del archivo para incluir las reglas que protegen contra ataques de inyección y vulnerabilidades web conocidas.
 ![Paso 19](../imagenes%20rehan/19.png)
 
-### 21. Activación del motor de seguridad (SecRuleEngine)
-Modificación del archivo de configuración principal para activar el filtrado. Se cambia la directiva de `DetectionOnly` (solo detectar) a `On` (bloquear ataques) para que el WAF sea efectivo.
+### 20. Activación del Motor de Reglas (modsecurity.conf)
+Edición del archivo de configuración principal de ModSecurity. Se cambia la directiva `SecRuleEngine DetectionOnly` a `SecRuleEngine On` para permitir el bloqueo de ataques en tiempo real.
 ![Paso 20](../imagenes%20rehan/20.png)
 
-### 22. Instalación del Agente Wazuh
-Despliegue del agente de monitorización **Wazuh** mediante el gestor de paquetes `apt`. Este agente permitirá la detección de intrusiones a nivel de host (HIDS).
+### 21. Despliegue del Agente Wazuh vía repositorio
+Descarga e instalación del agente de **Wazuh** utilizando el gestor de paquetes. Se prepara el servidor para integrarse con el SIEM centralizado.
 ![Paso 21](../imagenes%20rehan/21.png)
 
-### 23. Verificación del Servicio Wazuh-Agent
-Uso de `systemctl status wazuh-agent` para confirmar que el servicio está **active (running)**. Esto asegura que el servidor está enviando telemetría de seguridad al manager.
+### 22. Verificación del estado del Agente Wazuh
+Ejecución de `systemctl status wazuh-agent`. Se confirma que el servicio está **active (running)** y correctamente iniciado en el sistema.
 ![Paso 22](../imagenes%20rehan/22.png)
 
-### 24. Auditoría de Base de Datos y Logs
-Revisión de los logs generados en el servidor. Se verifica la correcta escritura de eventos para que puedan ser cruzados con los datos de MariaDB y mostrar alertas en el dashboard.
+### 23. Configuración de la Base de Datos para Logs
+Acceso a MariaDB para configurar las tablas donde se registrarán los eventos de seguridad. Se preparan los permisos para que los servicios de monitorización puedan escribir datos.
 ![Paso 23](../imagenes%20rehan/23.png)
 
-### 25. Monitorización de Procesos en Tiempo Real
-Uso del comando `top` o similar para auditar el consumo de recursos. Se comprueba que los procesos de Wazuh y el WAF no penalizan el rendimiento del servidor web.
+### 24. Monitorización de recursos con TOP
+Uso del comando `top` para verificar el impacto de los nuevos servicios de seguridad en la CPU y la memoria RAM, asegurando la estabilidad de la instancia.
 ![Paso 24](../imagenes%20rehan/24.png)
 
-### 26. Reinicio de Nginx y Validación de Sintaxis
-Ejecución de un reinicio del servicio Nginx. Es un paso crítico para asegurar que las nuevas configuraciones de seguridad se han cargado sin errores de sintaxis.
+### 25. Comprobación de configuración y reinicio de Nginx
+Validación de la sintaxis de los archivos de configuración y reinicio del servidor web para aplicar los cambios del firewall (WAF).
 ![Paso 25](../imagenes%20rehan/25.png)
 
-### 27. Validación Final del Dashboard Web
-Acceso al dominio configurado donde se observa la interfaz del proyecto. Se confirma que el servidor responde correctamente bajo las nuevas reglas de seguridad y cifrado HTTPS.
+### 26. Acceso final al sitio web bajo HTTPS
+Prueba final de carga del dominio `cyberarena-rehan.duckdns.org` en el navegador. Se confirma que el sitio es accesible y que el certificado SSL está funcionando correctamente.
 ![Paso 26](../imagenes%20rehan/26.png)
