@@ -431,21 +431,6 @@ sudo ls -lh /root/backups
  
 ---
  
-## Resumen del Proceso
- 
-| Capa | Medida | Estado |
-|---|---|---|
-| **Red** | Parámetros kernel anti-MITM y anti-redirect | ✅ |
-| **SSH** | MaxAuthTries, LogLevel VERBOSE, sin forwarding | ✅ |
-| **Autenticación** | Fail2Ban (3 intentos / 1h ban) | ✅ |
-| **Contraseñas** | SHA rounds 10000, caducidad 90 días | ✅ |
-| **Base de datos** | MariaDB securizado, sin usuarios anónimos | ✅ |
-| **WAF** | ModSecurity + OWASP CRS 3.3.5 en modo bloqueo | ✅ |
-| **HIDS** | Agente Wazuh conectado al servidor central | ✅ |
-| **Backups** | Script automatizado con limpieza de 7 días | ✅ |
-| **Auditoría** | Lynis: índice mejorado de 66 → 73 | ✅ |
- 
----
  
 ## 23. Incidencias y Problemas Encontrados
  
@@ -492,4 +477,21 @@ modsecurity_rules_file /etc/modsecurity/modsecurity.conf;
 ```
  
 Una vez aplicada esta solución, Nginx cargó correctamente el motor de ModSecurity junto con las 915 reglas del OWASP CRS, tal y como se muestra en la sección 13 de esta documentación.
+
+
+---
+
+## Resumen del Proceso
+ 
+| Capa | Medida | Estado |
+|---|---|---|
+| **Red** | Parámetros kernel anti-MITM y anti-redirect | ✅ |
+| **SSH** | MaxAuthTries, LogLevel VERBOSE, sin forwarding | ✅ |
+| **Autenticación** | Fail2Ban (3 intentos / 1h ban) | ✅ |
+| **Contraseñas** | SHA rounds 10000, caducidad 90 días | ✅ |
+| **Base de datos** | MariaDB securizado, sin usuarios anónimos | ✅ |
+| **WAF** | ModSecurity + OWASP CRS 3.3.5 en modo bloqueo | ✅ |
+| **HIDS** | Agente Wazuh conectado al servidor central | ✅ |
+| **Backups** | Script automatizado con limpieza de 7 días | ✅ |
+| **Auditoría** | Lynis: índice mejorado de 66 → 73 | ✅ |
 
