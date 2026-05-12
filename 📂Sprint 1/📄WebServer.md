@@ -70,8 +70,6 @@ Basado en la configuración visualizada en el panel de AWS, se destacan los sigu
 * **Diagnóstico Interno:** Se permite el protocolo **ICMP** únicamente desde la red interna (`10.0.0.0/16`), facilitando tareas de red (como `ping`) sin exponer el servidor a escaneos externos.
 * **Servicios Web Ampliados:** Además de los puertos estándar **80** y **443**, se ha habilitado el puerto **8080**, comúnmente utilizado para entornos de desarrollo o servidores de aplicaciones específicos.
 * **Acceso Global:** El servicio **SSH (puerto 22)** y los servicios web están configurados con origen `0.0.0.0/0` para permitir el acceso desde cualquier ubicación.
-
-> **Nota de seguridad:** En entornos de producción, se recomienda restringir el acceso SSH (puerto 22) exclusivamente a IPs de administración conocidas o mediante un Bastion Host para minimizar la superficie de exposición.
  
 ![Reglas de Entrada del Security Group](../Imagenes/41.png)
  
