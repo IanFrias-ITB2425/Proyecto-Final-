@@ -48,18 +48,30 @@ Se ha desplegado una instancia **t3.micro** en la región de AWS correspondiente
 ---
  
 ## 2. Configuración de Seguridad (Firewall)
- 
+
 Se han definido las reglas del **Security Group** asociado a la instancia EC2. Este actúa como firewall virtual a nivel de red, controlando el tráfico de entrada (inbound) y salida (outbound) de la instancia.
- 
+
 **Reglas de entrada configuradas:**
- 
-| Puerto | Protocolo | Origen | Descripción |
-|---|---|---|---|
-| 22 | TCP | 0.0.0.0/0 | Acceso SSH para administración remota |
-| 80 | TCP | 0.0.0.0/0 | Tráfico HTTP público |
-| 443 | TCP | 0.0.0.0/0 | Tráfico HTTPS cifrado (SSL/TLS) |
- 
-> **Nota de seguridad:** En producción se recomienda restringir el acceso SSH (puerto 22) a IPs de administración conocidas para reducir la superficie de ataque. En el contexto de este proyecto se ha mantenido abierto para facilitar la gestión.
+
+| ID de la regla | Tipo | Protocolo | Puerto | Origen | Descripción |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `sgr-0d28d020c8e46aadc` | MYSQL/Aurora | TCP | 3306 | 10.0.0.0/16 | Acceso a Base de Datos (restringido a la red interna) |
+| `sgr-0f9f72b6ade085f3e` | Todos los ICMP IPv4 | ICMP | Todo | 10.0.0.0/16 | Protocolo de diagnóstico/ping interno |
+| `sgr-022f501dbdbd21212` | SSH | TCP | 22 | 0.0.0.0/0 | Acceso SSH para administración remota |
+| `sgr-0be835dea0f999ebe` | TCP personalizado | TCP | 8080 | 0.0.0.0/0 | Puerto de aplicación alternativo |
+| `sgr-0276c00c833a85834` | HTTP | TCP | 80 | 0.0.0.0/0 | Tráfico web público (HTTP) |
+| `sgr-02be82395088d96e6` | HTTPS | TCP | 443 | 0.0.0.0/0 | Tráfico web seguro (HTTPS) |
+
+### Análisis de la configuración según captura
+
+Basado en la configuración visualizada en el panel de AWS, se destacan los siguientes puntos:
+
+* **Segmentación de Base de Datos:** El tráfico hacia el puerto **3306 (MySQL)** está restringido al bloque CIDR `10.0.0.0/16`, lo que garantiza que solo otros recursos dentro de la misma red privada puedan conectarse a la base de datos, siguiendo las mejores prácticas de seguridad.
+* **Diagnóstico Interno:** Se permite el protocolo **ICMP** únicamente desde la red interna (`10.0.0.0/16`), facilitando tareas de red (como `ping`) sin exponer el servidor a escaneos externos.
+* **Servicios Web Ampliados:** Además de los puertos estándar **80** y **443**, se ha habilitado el puerto **8080**, comúnmente utilizado para entornos de desarrollo o servidores de aplicaciones específicos.
+* **Acceso Global:** El servicio **SSH (puerto 22)** y los servicios web están configurados con origen `0.0.0.0/0` para permitir el acceso desde cualquier ubicación.
+
+> **Nota de seguridad:** En entornos de producción, se recomienda restringir el acceso SSH (puerto 22) exclusivamente a IPs de administración conocidas o mediante un Bastion Host para minimizar la superficie de exposición.
  
 ![Reglas de Entrada del Security Group](../Imagenes/41.png)
  
