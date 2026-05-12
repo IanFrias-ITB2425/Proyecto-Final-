@@ -351,7 +351,6 @@ Nuevo intento de SQLi detectado, esta vez desde la IP `79.117.174.171`:
 - **Regla activada**: `REQUEST-942-APPLICATION-ATTACK-SQLI.conf` (ID 942100)
 - **Payload detectado**: `?id=1'%20OR%20'1'='1`
 - **Severidad**: 2 (OWASP CRS 3.3.5)
-- **Fecha/hora**: 2026/05/08 13:46:26
 
 ![Logs ModSecurity SQLi 08/05](../Imagenes/38.png)
 
@@ -366,7 +365,6 @@ ModSecurity detectó y bloqueó un intento de Cross-Site Scripting desde la mism
 - **Regla activada**: `REQUEST-941-APPLICATION-ATTACK-XSS.conf` (ID 941100)
 - **Payload detectado**: `?buscar=<script>alert('Hackeado')</script>` (XSS reflejado clásico)
 - **Severidad**: 2 (OWASP CRS 3.3.5)
-- **Fecha/hora**: 2026/05/08 13:43:57
 
 ![Logs ModSecurity XSS 08/05](../Imagenes/39.png)
 
