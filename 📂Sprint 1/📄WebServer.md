@@ -413,10 +413,9 @@ Todos los servicios están configurados para iniciarse automáticamente con el s
  
 ### Expiración de la suscripción AWS del centro educativo
  
-Durante el desarrollo del proyecto, la suscripción de AWS del centro educativo expiró de forma inesperada, lo que provocó la pérdida de acceso a todas las instancias EC2 en ejecución y la eliminación de los recursos asociados (instancias, volúmenes EBS, Security Groups y configuración de red).
+Durante el desarrollo del proyecto, la suscripción de AWS del centro educativo expiró de forma inesperada, lo que provocó la pérdida de acceso a todas las instancias EC2 y la eliminación de los recursos asociados (instancias, volúmenes, Security Groups y configuración de red).
  
 Esto obligó al equipo a rehacer desde cero toda la infraestructura del servidor web, repitiendo el proceso de despliegue completo descrito en esta documentación.
  
 Gracias a que esta documentación fue redactada de forma detallada durante el Sprint 1, el proceso de reconstrucción fue significativamente más rápido que el despliegue original. Cada paso estaba registrado con los comandos exactos, configuraciones y decisiones tomadas, lo que permitió replicar el entorno sin tener que investigar de nuevo ni improvisar.
  
-> Esta incidencia pone de manifiesto la importancia de mantener documentación técnica actualizada y detallada a lo largo de todo el proyecto, especialmente en entornos cloud donde los recursos pueden desaparecer de forma abrupta.
