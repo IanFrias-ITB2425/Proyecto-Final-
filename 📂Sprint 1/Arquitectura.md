@@ -16,14 +16,11 @@ El objetivo principal de este primer Sprint fue establecer los cimientos de la i
 ## 🛠️ Diseño de la Red (VPC y Subredes)
 Se diseñó una **Virtual Private Cloud (VPC)** personalizada (`10.0.0.0/16`) para tener control total sobre el enrutamiento y aislar los entornos.
 
-![Flujo de creación de VPC](46.png)
+![Flujo de creación de VPC](Imagenes/46.png)
 *Creación exitosa de la VPC y sus subredes en la consola de AWS.*
 
 * **Subred Pública - DMZ (`10.0.1.0/24`):** Diseñada para albergar el Firewall Perimetral y exponer servicios hacia Internet.
 * **Subred Privada - Búnker (`10.0.2.0/24`):** Diseñada para albergar el Honeypot (Docker Lab) de forma aislada, sin exposición a IPs públicas.
-
-![Topología Conceptual](image_d3e430.png)
-*Esquema conceptual de la segmentación CyberArena.*
 
 ---
 
@@ -31,8 +28,8 @@ Se diseñó una **Virtual Private Cloud (VPC)** personalizada (`10.0.0.0/16`) pa
 ## 🚀 Despliegue del Nodo Perimetral (Gateway)
 Ante las restricciones de AWS Academy para usar appliances del Marketplace (como pfSense preconfigurado), pivotamos hacia la creación de un router personalizado usando **Ubuntu Server 24.04 LTS (t3.micro)**.
 
-![Selección de AMI y Tipo de Instancia](47.png)
-![Par de claves](48.png)
+![Selección de AMI y Tipo de Instancia](Imagenes/47.png)
+![Par de claves](Imagenes/48.png)
 *Selección de la imagen base de Ubuntu y configuración de claves RSA para acceso seguro.*
 
 <a name="configuración-interfaces"></a>
@@ -42,8 +39,8 @@ Para que el servidor actúe como puente entre Internet y el Honeypot, se le conf
 * **eth0 (Pública):** Conectada a la subred `10.0.1.0/24`.
 * **eth1 (Privada):** Conectada a la subred `10.0.2.0/24` (Interfaz 2 configurada manualmente).
 
-![Configuración Interfaz 1](51.png)
-![Configuración Interfaz 2](52.png)
+![Configuración Interfaz 1](Imagenes/51.png)
+![Configuración Interfaz 2](Imagenes/52.png)
 *Asignación de las interfaces a sus respectivas subredes.*
 
 Se creó el **Security Group (`pfSense-SG`)** aplicando el principio de mínimo privilegio, permitiendo únicamente el tráfico web estándar y la administración cifrada:
@@ -51,8 +48,8 @@ Se creó el **Security Group (`pfSense-SG`)** aplicando el principio de mínimo 
 * HTTPS (443)
 * SSH (22)
 
-![Reglas del Security Group](50.png)
+![Reglas del Security Group](Imagenes/50.png)
 
 Una vez configurado el almacenamiento y la red, el nodo perimetral fue lanzado con éxito en la infraestructura.
 
-![Lanzamiento exitoso](54.png)
+![Lanzamiento exitoso](Imagenes/54.png)
