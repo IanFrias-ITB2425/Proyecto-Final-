@@ -31,6 +31,7 @@ Ante las restricciones de AWS Academy para usar appliances del Marketplace (como
 
 ![Selección de AMI y Tipo de Instancia](../Imagenes/47.png)
 ![Par de claves](../Imagenes/48.png)
+
 *Selección de la imagen base de Ubuntu y configuración de claves RSA para acceso seguro.*
 
 <a name="configuración-interfaces"></a>
@@ -42,6 +43,7 @@ Para que el servidor actúe como puente entre Internet y el Honeypot, se le conf
 
 ![Configuración Interfaz 1](../Imagenes/51.png)
 ![Configuración Interfaz 2](../Imagenes/52.png)
+
 *Asignación de las interfaces a sus respectivas subredes.*
 
 Se creó el **Security Group (`pfSense-SG`)** aplicando el principio de mínimo privilegio, permitiendo únicamente el tráfico web estándar y la administración cifrada:
