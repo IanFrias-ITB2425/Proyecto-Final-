@@ -55,7 +55,7 @@ sudo docker logs cyberarena_dvwa 2>&1 | grep "POST /vulnerabilities/exec/"
 
 > **Captura — Log de POST a `/vulnerabilities/exec/` capturado:**
 >
-> ![exec log](screenshots/12-exec-log.png)
+>![XSS logs](../Imagenes%20Laboratotio/vulexec.png)
 
 ---
 
