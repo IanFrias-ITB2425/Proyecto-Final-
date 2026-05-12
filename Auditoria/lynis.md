@@ -31,8 +31,8 @@
 17. [Hardening del Kernel (sysctl)](#17-hardening-del-kernel-sysctl)
 18. [Permisos de Ficheros](#18-permisos-de-ficheros)
 19. [Advertencias Detectadas](#19-advertencias-detectadas)
-20. [Sugerencias de Mejora](#20-sugerencias-de-mejora)
-21. [Plan de Remediación Priorizado](#21-plan-de-remediación-priorizado)
+20. [Resultados de Lynis – Advertencias y Sugerencias](#20-resultados-de-lynis--advertencias-y-sugerencias)
+21. [Medidas de Hardening Aplicadas](#21-medidas-de-hardening-aplicadas)
 ---
  
 ## 1. Resultado Global
@@ -512,156 +512,273 @@ Referencia: [https://cisofy.com/lynis/controls/FIRE-4512/](https://cisofy.com/ly
  
 ---
  
-## 20. Sugerencias de Mejora
+## 20. Resultados de Lynis – Advertencias y Sugerencias
  
-A continuación se presentan las **41 sugerencias** emitidas por Lynis, agrupadas por categoría:
+Este es el output literal que Lynis muestra al final del escaneo, con los avisos que ha detectado.
  
-### Actualización y paquetes
+### Warnings (2)
  
-| ID | Descripción |
-|---|---|
-| `LYNIS` | Versión de Lynis desactualizada (>4 meses). Actualizar desde GitHub |
-| `DEB-0810` | Instalar `apt-listbugs` para alertas de bugs críticos previas a instalaciones |
-| `DEB-0811` | Instalar `apt-listchanges` para seguimiento de cambios en upgrades |
-| `PKGS-7370` | Instalar `debsums` para verificación de integridad de paquetes instalados |
-| `PKGS-7394` | Instalar `apt-show-versions` para gestión de parches |
+Lynis solo encontró 2 advertencias, que son los problemas más serios que hay que mirar primero.
  
-### Arranque y servicios
+```
+! Found some information disclosure in SMTP banner (OS or software name) [MAIL-8818]
+    https://cisofy.com/lynis/controls/MAIL-8818/
  
-| ID | Descripción |
-|---|---|
-| `BOOT-5122` | Configurar contraseña en GRUB para proteger el modo de usuario único |
-| `BOOT-5264` | Añadir sandboxing a servicios del sistema mediante directivas systemd |
+! iptables module(s) loaded, but no rules active [FIRE-4512]
+    https://cisofy.com/lynis/controls/FIRE-4512/
+```
  
-### Kernel y sistema
+**MAIL-8818** – El banner de Postfix está mostrando información del sistema operativo. Cualquiera que se conecte al puerto 25 puede ver qué software está corriendo, lo que facilita buscar vulnerabilidades específicas.
  
-| ID | Descripción |
-|---|---|
-| `KRNL-5820` | Deshabilitar core dumps en `/etc/security/limits.conf` |
-| `KRNL-6000` | Ajustar valores sysctl que difieren del perfil de seguridad (ver sección 17) |
- 
-### Autenticación y contraseñas
- 
-| ID | Descripción |
-|---|---|
-| `AUTH-9262` | Instalar módulo PAM para verificación de fortaleza de contraseñas (`pam_cracklib` o `pam_passwdqc`) |
-| `AUTH-9284` | Revisar y eliminar cuentas bloqueadas innecesarias |
-| `AUTH-9328` | Establecer umask más restrictivo en `/etc/login.defs` (valor `027` recomendado) |
- 
-### Sistemas de ficheros
- 
-| ID | Descripción |
-|---|---|
-| `FILE-6310` | Mover `/home` a una partición separada para limitar el impacto de disco lleno |
-| `FILE-6310` | Mover `/tmp` a una partición separada |
-| `FILE-6310` | Mover `/var` a una partición separada |
-| `FILE-7524` | Revisar y restringir permisos de ficheros (ver log de Lynis para detalle) |
- 
-### Red y protocolos
- 
-| ID | Descripción |
-|---|---|
-| `NETW-3200` | Evaluar y deshabilitar protocolo `dccp` si no es necesario |
-| `NETW-3200` | Evaluar y deshabilitar protocolo `sctp` si no es necesario |
-| `NETW-3200` | Evaluar y deshabilitar protocolo `rds` si no es necesario |
-| `NETW-3200` | Evaluar y deshabilitar protocolo `tipc` si no es necesario |
-| `NAME-4404` | Añadir IP y FQDN del host a `/etc/hosts` para resolución correcta |
-| `USB-1000` | Deshabilitar el módulo `usb-storage` si no se utilizan dispositivos USB |
- 
-### Correo electrónico (Postfix)
- 
-| ID | Descripción |
-|---|---|
-| `MAIL-8818` | Ocultar `mail_name` en el banner de Postfix (ver advertencia en sección 19) |
-| `MAIL-8820` | Deshabilitar el comando `VRFY` en Postfix: `postconf -e disable_vrfy_command=yes` |
- 
-### Servidor web (Nginx)
- 
-| ID | Descripción |
-|---|---|
-| `HTTP-6710` | Deshabilitar protocolos SSL/TLS débiles (TLSv1.0, TLSv1.1) |
-| `HTTP-6710` | Configurar suite de ciphers explícita para mayor protección de datos en tránsito |
- 
-### SSH
- 
-| ID | Descripción |
-|---|---|
-| `SSH-7408` | Reducir `ClientAliveCountMax` de 3 a 2 |
-| `SSH-7408` | Reducir `MaxSessions` de 10 a 2 |
-| `SSH-7408` | Cambiar el puerto SSH del 22 a un puerto no estándar |
-| `SSH-7408` | Establecer `TCPKeepAlive no` |
-| `SSH-7408` | Establecer `AllowAgentForwarding no` |
- 
-### Logging y auditoría
- 
-| ID | Descripción |
-|---|---|
-| `LOGG-2154` | Habilitar logging a host externo para archivado y protección adicional |
-| `LOGG-2190` | Investigar archivos eliminados que aún están en uso por procesos activos |
- 
-### Banners de advertencia legal
- 
-| ID | Descripción |
-|---|---|
-| `BANN-7126` | Añadir banner legal en `/etc/issue` para usuarios no autorizados |
-| `BANN-7130` | Añadir banner legal en `/etc/issue.net` para conexiones remotas |
- 
-### Accounting y auditoría del sistema
- 
-| ID | Descripción |
-|---|---|
-| `ACCT-9622` | Habilitar process accounting |
-| `ACCT-9626` | Habilitar `sysstat` para recopilación de métricas del sistema |
-| `ACCT-9628` | Instalar y habilitar `auditd` para auditoría de llamadas al sistema |
- 
-### Integridad y herramientas
- 
-| ID | Descripción |
-|---|---|
-| `FINT-4350` | Instalar herramienta de integridad de ficheros (AIDE, Tripwire o similar) |
-| `TOOL-5002` | Evaluar herramientas de automatización para gestión del sistema (Ansible, Puppet…) |
-| `HRDN-7222` | Restringir acceso a compiladores instalados únicamente al usuario root |
+**FIRE-4512** – El módulo de iptables está cargado en el kernel pero no hay ninguna regla definida. El servidor depende únicamente del Security Group de AWS como firewall, sin ninguna capa de protección local.
  
 ---
  
-## 21. Plan de Remediación Priorizado
+### Suggestions (41)
  
-A continuación se presenta un plan de acción ordenado por impacto y esfuerzo de implementación:
+Lynis generó 41 sugerencias. A continuación el output tal como aparece en la auditoría:
  
-### 🔴 Prioridad Alta (implementar de inmediato)
+```
+* This release is more than 4 months old. Check the website or GitHub to see
+  if there is an update available. [LYNIS]
  
-| # | Acción | Control |
+* Install apt-listbugs to display a list of critical bugs prior to each APT
+  installation. [DEB-0810]
+ 
+* Install apt-listchanges to display any significant changes prior to any
+  upgrade via APT. [DEB-0811]
+ 
+* Set a password on GRUB boot loader to prevent altering boot configuration
+  (e.g. boot in single user mode without password) [BOOT-5122]
+ 
+* Consider hardening system services [BOOT-5264]
+  - Details: Run '/usr/bin/systemd-analyze security SERVICE' for each service
+ 
+* If not required, consider explicit disabling of core dump in
+  /etc/security/limits.conf file [KRNL-5820]
+ 
+* Install a PAM module for password strength testing like pam_cracklib or
+  pam_passwdqc [AUTH-9262]
+ 
+* Look at the locked accounts and consider removing them [AUTH-9284]
+ 
+* Default umask in /etc/login.defs could be more strict like 027 [AUTH-9328]
+ 
+* To decrease the impact of a full /home file system, place /home on a
+  separate partition [FILE-6310]
+ 
+* To decrease the impact of a full /tmp file system, place /tmp on a
+  separate partition [FILE-6310]
+ 
+* To decrease the impact of a full /var file system, place /var on a
+  separate partition [FILE-6310]
+ 
+* Disable drivers like USB storage when not used, to prevent unauthorized
+  storage or data theft [USB-1000]
+ 
+* Add the IP name and FQDN to /etc/hosts for proper name resolving [NAME-4404]
+ 
+* Install debsums utility for the verification of packages with known good
+  database. [PKGS-7370]
+ 
+* Install package apt-show-versions for patch management purposes [PKGS-7394]
+ 
+* Determine if protocol 'dccp' is really needed on this system [NETW-3200]
+* Determine if protocol 'sctp' is really needed on this system [NETW-3200]
+* Determine if protocol 'rds' is really needed on this system [NETW-3200]
+* Determine if protocol 'tipc' is really needed on this system [NETW-3200]
+ 
+* You are advised to hide the mail_name (option: smtpd_banner) from your
+  postfix configuration. Use postconf -e or change your main.cf file
+  (/etc/postfix/main.cf) [MAIL-8818]
+ 
+* Disable the 'VRFY' command [MAIL-8820]
+  - Details  : disable_vrfy_command=no
+  - Solution : run postconf -e disable_vrfy_command=yes to change the value
+ 
+* Disable weak protocol in nginx configuration [HTTP-6710]
+ 
+* Change the HTTPS and SSL settings for enhanced protection of sensitive data
+  and privacy [HTTP-6710]
+ 
+* Consider hardening SSH configuration [SSH-7408]
+  - Details: ClientAliveCountMax (set 3 to 2)
+ 
+* Consider hardening SSH configuration [SSH-7408]
+  - Details: MaxSessions (set 10 to 2)
+ 
+* Consider hardening SSH configuration [SSH-7408]
+  - Details: Port (set 22 to <otro puerto>)
+ 
+* Consider hardening SSH configuration [SSH-7408]
+  - Details: TCPKeepAlive (set YES to NO)
+ 
+* Consider hardening SSH configuration [SSH-7408]
+  - Details: AllowAgentForwarding (set YES to NO)
+ 
+* Enable logging to an external logging host for archiving purposes and
+  additional protection [LOGG-2154]
+ 
+* Check what deleted files are still in use and why. [LOGG-2190]
+ 
+* Add a legal banner to /etc/issue, to warn unauthorized users [BANN-7126]
+ 
+* Add legal banner to /etc/issue.net, to warn unauthorized users [BANN-7130]
+ 
+* Enable process accounting [ACCT-9622]
+ 
+* Enable sysstat to collect accounting (disabled) [ACCT-9626]
+ 
+* Enable auditd to collect audit information [ACCT-9628]
+ 
+* Install a file integrity tool to monitor changes to critical and sensitive
+  files [FINT-4350]
+ 
+* Determine if automation tools are present for system management [TOOL-5002]
+ 
+* Consider restricting file permissions [FILE-7524]
+  - Details  : See screen output or log file
+  - Solution : Use chmod to change file permissions
+ 
+* One or more sysctl values differ from the scan profile and could be tweaked
+  [KRNL-6000]
+  - Solution : Change sysctl value or disable test
+    (skip-test=KRNL-6000:<sysctl-key>)
+ 
+* Harden compilers like restricting access to root user only [HRDN-7222]
+```
+ 
+Las sugerencias más relevantes a destacar son las de SSH, ya que indican parámetros concretos con el valor actual y el valor al que habría que cambiarlo. Las de `FILE-6310` sobre particiones separadas para `/home`, `/tmp` y `/var` son habituales en entornos de producción pero en este caso no aplica porque la instancia es una EC2 con un único volumen. Las sugerencias de `NETW-3200` sobre protocolos como `dccp`, `sctp`, `rds` o `tipc` se resuelven añadiéndolos a la lista negra de módulos del kernel en `/etc/modprobe.d/`.
+ 
+---
+ 
+## 21. Medidas de Hardening Aplicadas
+ 
+Tras el primer escaneo de Lynis (índice 66), se aplicaron una serie de medidas de seguridad que subieron el índice hasta **73**. A continuación se detalla lo que se hizo en cada área, relacionándolo con lo que Lynis había señalado.
+ 
+---
+ 
+### WAF – ModSecurity + OWASP CRS
+ 
+Se instaló ModSecurity como WAF integrado en Nginx. Por defecto viene en modo `DetectionOnly`, así que lo primero fue cambiar eso:
+ 
+```bash
+sudo mv /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
+sudo sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/modsecurity/modsecurity.conf
+```
+ 
+Se reinstalaron las reglas del OWASP Core Rule Set (versión `3.3.5-2`) para tener una base limpia, quedando **915 reglas** activas. Se verificó el bloqueo real lanzando un ataque SQLi desde otra máquina y comprobando que devolvía `403 Forbidden`.
+ 
+---
+ 
+### SSH – Hardening de `sshd_config`
+ 
+Lynis marcaba varias opciones SSH como `SUGGESTION`. Se aplicaron los siguientes cambios en `/etc/ssh/sshd_config`:
+ 
+```bash
+MaxAuthTries 3          # Limita intentos de autenticación por sesión
+AllowTcpForwarding no   # Evita usar el servidor como proxy SSH
+X11Forwarding no        # Deshabilita reenvío de aplicaciones gráficas
+SyslogFacility AUTH     # Logging de autenticación
+LogLevel VERBOSE        # Registra detalles de cada conexión, incluyendo claves usadas
+```
+ 
+Con esto, las opciones `AllowTcpForwarding`, `LogLevel`, `MaxAuthTries` y `X11Forwarding` pasaron a estar en `OK` en el segundo escaneo.
+ 
+---
+ 
+### Contraseñas – Política de caducidad y hash
+ 
+Se reforzó la política de contraseñas en `/etc/login.defs`:
+ 
+```bash
+PASS_MAX_DAYS   90      # La contraseña caduca a los 90 días
+PASS_MIN_DAYS   7       # No se puede cambiar antes de 7 días
+PASS_WARN_AGE   7       # Aviso 7 días antes de la caducidad
+ 
+SHA_CRYPT_MIN_ROUNDS 10000   # Rondas mínimas de hash
+SHA_CRYPT_MAX_ROUNDS 10000   # Rondas máximas de hash
+```
+ 
+Más rondas de hash significa que un ataque de fuerza bruta offline es mucho más lento. Lynis confirmó estas opciones como `CONFIGURED` en el segundo escaneo.
+ 
+---
+ 
+### Red – Parámetros del kernel (`sysctl`)
+ 
+Se añadieron parámetros en `/etc/sysctl.conf` para endurecer la pila de red:
+ 
+```bash
+net.ipv4.conf.all.accept_redirects = 0       # No aceptar redirecciones ICMP
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.conf.all.send_redirects = 0         # No enviar redirecciones (no somos router)
+net.ipv4.conf.all.log_martians = 1           # Registrar paquetes con IPs imposibles
+```
+ 
+Estos parámetros corresponden a los controles `KRNL-6000` de Lynis. En el segundo escaneo, los cuatro aparecen como `OK`.
+ 
+---
+ 
+### Fail2Ban – Protección SSH contra fuerza bruta
+ 
+Se configuró Fail2Ban con una jail específica para SSH:
+ 
+```ini
+[sshd]
+enabled  = true
+port     = ssh
+filter   = sshd
+logpath  = /var/log/auth.log
+maxretry = 3
+bantime  = 1h
+```
+ 
+Tras 3 intentos fallidos de login, la IP queda baneada 1 hora automáticamente. Lynis detectó Fail2Ban instalado con `jail.local` activo.
+ 
+---
+ 
+### MariaDB – Securización post-instalación
+ 
+Se ejecutó `mysql_secure_installation` eliminando la configuración insegura por defecto:
+ 
+| Acción | Resultado |
+|---|---|
+| Eliminar usuarios anónimos | ✅ |
+| Deshabilitar login root remoto | ✅ |
+| Eliminar base de datos `test` | ✅ |
+| Unix socket authentication | ✅ Habilitado |
+ 
+---
+ 
+### HIDS – Agente Wazuh
+ 
+Se instaló y configuró el agente Wazuh conectado al servidor central en `10.0.1.96:1514/TCP`. Esto cubre parcialmente la sugerencia `LOGG-2154` de Lynis sobre envío de logs a un host externo, ya que Wazuh recoge eventos del sistema en tiempo real.
+ 
+---
+ 
+### Backups – Script automatizado con cron
+ 
+Se creó el script `/usr/local/bin/backup_cyberarena.sh` que realiza:
+- Backup de la base de datos con `mysqldump` → `db_backup_FECHA.sql`
+- Backup del directorio web `/var/www/html` → `web_backup_FECHA.tar.gz`
+- Limpieza automática de backups con más de 7 días
+Se programó en crontab para ejecutarse cada día a las 03:00 AM:
+ 
+```bash
+00 03 * * * /usr/local/bin/backup_cyberarena.sh >> /var/log/backup_cyberarena.log 2>&1
+```
+ 
+---
+ 
+### Resultado comparativo Lynis
+ 
+| Métrica | Antes del hardening | Después del hardening |
 |---|---|---|
-| 1 | Ocultar banner SMTP de Postfix | MAIL-8818 |
-| 2 | Definir reglas de firewall local (UFW) | FIRE-4512 |
-| 3 | Deshabilitar protocolos TLS inseguros en Nginx y definir ciphers | HTTP-6710 |
-| 4 | Instalar y configurar AIDE para integridad de ficheros | FINT-4350 |
-| 5 | Instalar y habilitar `auditd` | ACCT-9628 |
+| Hardening Index | **66** | **73** |
+| Tests realizados | 266 | 267 |
+| Plugins habilitados | 0 | 1 |
  
-### 🟡 Prioridad Media (planificar en próximo sprint)
- 
-| # | Acción | Control |
-|---|---|---|
-| 6 | Ajustar parámetros sysctl pendientes (kernel hardening) | KRNL-6000 |
-| 7 | Instalar módulo PAM de fortaleza de contraseñas | AUTH-9262 |
-| 8 | Configurar logging remoto hacia SIEM Wazuh | LOGG-2154 |
-| 9 | Deshabilitar comando VRFY en Postfix | MAIL-8820 |
-| 10 | Añadir banners legales en `/etc/issue` e `/etc/issue.net` | BANN-7126/7130 |
-| 11 | Ajustar opciones SSH pendientes (`ClientAliveCountMax`, `MaxSessions`, etc.) | SSH-7408 |
-| 12 | Restringir acceso a compiladores | HRDN-7222 |
-| 13 | Habilitar `sysstat` para métricas del sistema | ACCT-9626 |
- 
-### 🟢 Prioridad Baja (mejora continua)
- 
-| # | Acción | Control |
-|---|---|---|
-| 14 | Instalar `apt-listbugs` y `apt-listchanges` | DEB-0810/11 |
-| 15 | Instalar `debsums` y `apt-show-versions` | PKGS-7370/7394 |
-| 16 | Configurar contraseña en GRUB | BOOT-5122 |
-| 17 | Añadir sandboxing systemd a servicios críticos | BOOT-5264 |
-| 18 | Deshabilitar protocolos de red no utilizados (dccp, sctp, rds, tipc) | NETW-3200 |
-| 19 | Mover `/home`, `/tmp`, `/var` a particiones separadas | FILE-6310 |
-| 20 | Ajustar umask a `027` en `/etc/login.defs` | AUTH-9328 |
+La mejora de **7 puntos** se debe directamente a las configuraciones aplicadas en SSH, contraseñas, kernel y la detección de Fail2Ban y el malware scanner (chkrootkit).
  
 ---
  
