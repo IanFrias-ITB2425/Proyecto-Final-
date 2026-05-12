@@ -19,12 +19,11 @@
 15. [Configuración del Agente Wazuh](#15-configuración-del-agente-wazuh)
 16. [Securización de MariaDB](#16-securización-de-mariadb)
 17. [Auditoría con Lynis – Estado Final](#17-auditoría-con-lynis--estado-final)
-18. [Logs de ModSecurity – Detección de SQLi (04/05/2026)](#18-logs-de-modsecurity--detección-de-sqli-04052026)
-19. [Logs de ModSecurity – Detección de SQLi (08/05/2026)](#19-logs-de-modsecurity--detección-de-sqli-08052026)
-20. [Logs de ModSecurity – Detección de XSS (08/05/2026)](#20-logs-de-modsecurity--detección-de-xss-08052026)
-21. [Script de Backup Automatizado](#21-script-de-backup-automatizado)
-22. [Configuración de Cron para Backups Automáticos](#22-configuración-de-cron-para-backups-automáticos)
-23. [Ejecución y Verificación del Backup](#23-ejecución-y-verificación-del-backup)
+18. [Logs de ModSecurity – Detección de SQLi (08/05/2026)](#19-logs-de-modsecurity--detección-de-sqli-08052026)
+19. [Logs de ModSecurity – Detección de XSS (08/05/2026)](#20-logs-de-modsecurity--detección-de-xss-08052026)
+20. [Script de Backup Automatizado](#21-script-de-backup-automatizado)
+21. [Configuración de Cron para Backups Automáticos](#22-configuración-de-cron-para-backups-automáticos)
+22. [Ejecución y Verificación del Backup](#23-ejecución-y-verificación-del-backup)
 ---
  
 ## 1. Auditoría con Lynis – Estado Inicial
@@ -338,22 +337,8 @@ Los logs se almacenan en `/var/log/lynis.log` y `/var/log/lynis-report.dat`.
  
 ---
  
-## 18. Logs de ModSecurity – Detección de SQLi (04/05/2026)
  
-ModSecurity detectó y bloqueó varios intentos de inyección SQL provenientes de la IP `100.50.41.224`. Los logs registran:
- 
-- **Código de respuesta**: 403 (Acceso denegado)
-- **Fase de detección**: Phase 2
-- **Regla activada**: `REQUEST-942-APPLICATION-ATTACK-SQLI.conf` (ID 942100)
-- **Payload detectado**: `?id=1'%20OR%20'1'='1` (bypass de autenticación SQL clásico)
-- **Severidad**: 2 (OWASP CRS 3.3.5)
-Los intentos se registraron entre las 16:17 y las 16:41 del 04/05/2026.
- 
-![Logs ModSecurity SQLi](../Imagenes/23.png)
- 
----
- 
-## 19. Logs de ModSecurity – Detección de SQLi (08/05/2026)
+## 18. Logs de ModSecurity – Detección de SQLi (08/05/2026)
  
 Nuevo intento de SQLi detectado, esta vez desde la IP `79.117.174.171`:
  
@@ -367,7 +352,7 @@ Nuevo intento de SQLi detectado, esta vez desde la IP `79.117.174.171`:
  
 ---
  
-## 20. Logs de ModSecurity – Detección de XSS (08/05/2026)
+## 19. Logs de ModSecurity – Detección de XSS (08/05/2026)
  
 ModSecurity detectó y bloqueó un intento de Cross-Site Scripting desde la misma IP `79.117.174.171`:
  
@@ -381,7 +366,7 @@ ModSecurity detectó y bloqueó un intento de Cross-Site Scripting desde la mism
  
 ---
  
-## 21. Script de Backup Automatizado
+## 20. Script de Backup Automatizado
  
 Se creó el script `/usr/local/bin/backup_cyberarena.sh` con las siguientes funciones:
  
@@ -394,7 +379,7 @@ Los archivos se almacenan en `/root/backups` con el formato `db_backup_YYYY-MM-D
  
 ---
  
-## 22. Configuración de Cron para Backups Automáticos
+## 21. Configuración de Cron para Backups Automáticos
  
 Se programó la ejecución automática del script en `crontab` todos los días a las 03:00 AM:
  
@@ -416,7 +401,7 @@ La salida y los errores se redirigen a `/var/log/backup_cyberarena.log` para pod
  
 ---
  
-## 23. Ejecución y Verificación del Backup
+## 22. Ejecución y Verificación del Backup
  
 Se ejecutó el script manualmente para comprobar que funcionaba correctamente antes de dejarlo en manos del cron:
  
