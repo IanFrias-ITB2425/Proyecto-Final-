@@ -17,9 +17,13 @@ El objetivo principal de este primer Sprint fue establecer los cimientos de la i
 Se diseñó una **Virtual Private Cloud (VPC)** personalizada (`10.0.0.0/16`) para tener control total sobre el enrutamiento y aislar los entornos.
 
 ![Flujo de creación de VPC](../Imagenes/42.png)
+
 ![Flujo de creación de VPC](../Imagenes/43.png)
+
 ![Flujo de creación de VPC](../Imagenes/44.png)
+
 ![Flujo de creación de VPC](../Imagenes/45.png)
+
 ![Flujo de creación de VPC](../Imagenes/46.png)
 
 *Creación exitosa de la VPC y sus subredes en la consola de AWS.*
