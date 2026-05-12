@@ -54,8 +54,6 @@ Se han definido las reglas del **Security Group** asociado a la instancia EC2. E
 
 ### Análisis de la configuración
 
-Basado en la configuración visualizada en el panel de AWS, se destacan los siguientes puntos:
-
 * **Segmentación de Base de Datos:** El tráfico hacia el puerto **3306 (MySQL)** está restringido al bloque CIDR `10.0.0.0/16`, lo que garantiza que solo otros recursos dentro de la misma red privada puedan conectarse a la base de datos, siguiendo las mejores prácticas de seguridad.
 * **Diagnóstico Interno:** Se permite el protocolo **ICMP** únicamente desde la red interna (`10.0.0.0/16`), facilitando tareas de red (como `ping`) sin exponer el servidor a escaneos externos.
 * **Servicios Web Ampliados:** Además de los puertos estándar **80** y **443**, se ha habilitado el puerto **8080**, comúnmente utilizado para entornos de desarrollo o servidores de aplicaciones específicos.
