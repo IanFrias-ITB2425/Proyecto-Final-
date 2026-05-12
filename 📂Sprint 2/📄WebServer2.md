@@ -490,7 +490,4 @@ modsecurity_rules_file /etc/modsecurity/modsecurity.conf;
 ```
  
 Una vez aplicada esta solución, Nginx cargó correctamente el motor de ModSecurity junto con las 915 reglas del OWASP CRS, tal y como se muestra en la sección 13 de esta documentación.
- 
-**Lección aprendida:**
- 
-ModSecurity v3 + conector Nginx es la arquitectura correcta cuando se trabaja con Nginx. La versión v2 (`libapache2-mod-security2`) está ligada a Apache y no debe usarse como referencia al documentar una integración con Nginx, aunque el paquete esté disponible en los repositorios y la instalación no falle.
+
