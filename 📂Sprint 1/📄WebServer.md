@@ -401,7 +401,7 @@ CREATE TABLE alertas_reales (
  
 Durante el desarrollo del proyecto, la suscripción de AWS del centro educativo expiró de forma inesperada, lo que provocó la pérdida de acceso a todas las instancias EC2 y la eliminación de los recursos asociados (instancias, volúmenes, Security Groups y configuración de red).
  
-Esto obligó al equipo a rehacer desde cero toda la infraestructura del servidor web, repitiendo el proceso de despliegue completo descrito en esta documentación.
+Esto obligó al equipo a rehacer desde cero toda la infraestructura del servidor web, repitiendo el proceso de despliegue completo descrito en esta documentación. Debido a la asignación de una nueva IP pública en la cuenta de AWS recuperada, fue necesario actualizar el direccionamiento dinámico. El dominio del proyecto evolucionó de cyberarena-rehan.duckdns.org al nuevo dominio definitivo: cyberarena-admin.duckdns.org.
  
 Gracias a que esta documentación fue redactada de forma detallada durante el Sprint 1, el proceso de reconstrucción fue significativamente más rápido que el despliegue original. Cada paso estaba registrado con los comandos exactos, configuraciones y decisiones tomadas, lo que permitió replicar el entorno sin tener que investigar de nuevo ni improvisar.
  
