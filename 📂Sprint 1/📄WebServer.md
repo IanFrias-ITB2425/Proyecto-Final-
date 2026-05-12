@@ -25,7 +25,7 @@
 14. [Configuración del Virtual Host en Nginx](#14-configuración-del-virtual-host-en-nginx)
 15. [Dashboard de Control "CyberArena"](#15-dashboard-de-control-cyberarena)
 16. [Estructura Final de la Base de Datos](#16-estructura-final-de-la-base-de-datos)
-17. [17. Incidencias y Problemas Encontrados](#17-incidencias-y-problemas-encontrados)
+17. [Incidencias y Problemas Encontrados](#17-incidencias-y-problemas-encontrados)
 ---
  
 ## 1. Resumen de la Instancia AWS (EC2)
