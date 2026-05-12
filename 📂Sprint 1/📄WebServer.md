@@ -330,15 +330,30 @@ sudo nginx -t && sudo systemctl reload nginx
  
 ## 15. Dashboard de Control "CyberArena"
  
-El panel de control de la plataforma **CyberArena** muestra en tiempo real el estado de los servicios críticos de la infraestructura:
+Se desarrolló un panel de control en PHP (`cyberarena_dashboard.php`) que muestra en tiempo real el estado de los servicios críticos de la infraestructura. Es una página de administración de acceso restringido que permite verificar el estado del sistema sin necesidad de conectarse por SSH.
  
-| Servicio | Tecnología | Estado |
+### Qué hace el dashboard
+ 
+Al cargarse, el PHP ejecuta tres comprobaciones directamente en el servidor:
+ 
+**1. Estado de la base de datos** — Intenta abrir una conexión real a MariaDB con el usuario `arena_sys`. Si la conexión tiene éxito, la tarjeta muestra `ONLINE`; si falla, muestra `CRITICAL`.
+ 
+**2. Carga del sistema** — Obtiene la carga media del servidor en los últimos 1, 5 y 15 minutos mediante `sys_getloadavg()`. Si la carga supera 1.5, el servidor web se marca como `OVERLOAD`; en caso contrario aparece como `NOMINAL`.
+ 
+**3. Estado del agente Wazuh** — Comprueba si el proceso `wazuh-agent` está en ejecución con `pgrep`. El resultado se muestra como `ACTIVE` u `OFFLINE`.
+ 
+### Qué se muestra en pantalla
+ 
+El dashboard presenta tres tarjetas de estado (Web Server, Database, SIEM Telemetry), cada una con un indicador de color animado: verde si el servicio está operativo, rojo si hay un problema. Incluye también dos paneles inferiores: uno con la configuración del WAF (ModSecurity, OWASP CRS, modo de bloqueo y TLS 1.3) y otro con las barras de carga del sistema en tiempo real para los tres intervalos.
+ 
+En la parte superior hay un ticker animado que muestra de forma continua los valores clave: carga actual, hostname, estado del WAF, estado del agente Wazuh y timestamp. Toda la información se genera dinámicamente en cada carga de página, por lo que siempre refleja el estado actual del servidor en el momento de la consulta.
+ 
+| Servicio | Tecnología | Indicador |
 |---|---|---|
-| Web Server | Nginx | 🟢 Nominal |
-| Database | MariaDB | 🟢 Nominal |
-| SIEM Telemetry | Wazuh Agent | 🟢 Online |
- 
-El dashboard permite al administrador verificar de forma rápida la disponibilidad de todos los componentes del stack sin necesidad de acceder por SSH al servidor.
+| Web Server | Nginx + ModSecurity | Carga del sistema |
+| Database | MariaDB (`arena_db`) | Conexión real a la BD |
+| SIEM Telemetry | Wazuh Agent | Proceso activo en el sistema |
+
  
 ![Dashboard de Control CyberArena](../Imagenes/14.png)
  
