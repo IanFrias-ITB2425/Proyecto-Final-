@@ -32,10 +32,6 @@ Antes de aplicar ninguna medida de hardening, se realizó una auditoría con **L
  
 Esta auditoría es la que marca qué hay que mejorar. Los puntos débiles detectados (SSH, contraseñas, kernel, falta de WAF...) son los que se abordan en las secciones siguientes.
  
-| Métrica | Antes | Después |
-|---|---|---|
-| Hardening Index | **66** | **73** |
-| Tests realizados | 266 | 267 |
  
 ![Lynis Estado Inicial](../Imagenes/25.png)
  
@@ -323,6 +319,11 @@ sudo mysql_secure_installation
 ## 17. Auditoría con Lynis – Estado Final
  
 Tras aplicar todas las medidas anteriores, se volvió a ejecutar Lynis 3.0.9 para comprobar la mejora. El índice subió de **66 a 73**, con 267 pruebas realizadas y 1 plugin habilitado.
+
+| Métrica | Antes | Después |
+|---|---|---|
+| Hardening Index | **66** | **73** |
+| Tests realizados | 266 | 267 |
  
 **Componentes activos detectados por Lynis:**
 - Firewall: ✅
