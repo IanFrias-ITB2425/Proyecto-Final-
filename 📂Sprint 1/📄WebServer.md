@@ -61,7 +61,7 @@ Se han definido las reglas del **Security Group** asociado a la instancia EC2. E
  
 > **Nota de seguridad:** En producción se recomienda restringir el acceso SSH (puerto 22) a IPs de administración conocidas para reducir la superficie de ataque. En el contexto de este proyecto se ha mantenido abierto para facilitar la gestión.
  
-![Reglas de Entrada del Security Group](../Imagenes/1.png)
+![Reglas de Entrada del Security Group](../Imagenes/41.png)
  
 ---
  
