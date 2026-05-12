@@ -12,7 +12,7 @@ Este manual explica cómo acceder a la plataforma web CyberArena y al panel de c
 La plataforma CyberArena es accesible públicamente a través de HTTPS. Abre el navegador y entra en:
  
 ```
-https://cyberarena-rehan.duckdns.org
+https://cyberarena-admin.duckdns.org
 ```
  
 > La conexión siempre va cifrada con TLS. Si el navegador muestra un aviso de certificado, significa que el certificado ha caducado y hay que renovarlo (ver sección del administrador).
@@ -22,7 +22,7 @@ https://cyberarena-rehan.duckdns.org
 El dashboard es una página de monitorización en tiempo real que muestra el estado de los servicios del servidor. Para acceder:
  
 ```
-https://cyberarena-rehan.duckdns.org/cyberarena_dashboard.php
+https://cyberarena-admin.duckdns.org/cyberarena_dashboard.php
 ```
  
 Una vez dentro verás tres indicadores:
