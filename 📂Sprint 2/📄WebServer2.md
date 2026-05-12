@@ -24,6 +24,8 @@
 20. [Script de Backup Automatizado](#20-script-de-backup-automatizado)
 21. [Configuración de Cron para Backups Automáticos](#21-configuración-de-cron-para-backups-automáticos)
 22. [Ejecución y Verificación del Backup](#22-ejecución-y-verificación-del-backup)
+23. [Incidencias y Problemas Encontrados](#23-incidencias-y-problemas-encontrados)
+
 ---
  
 ## 1. Auditoría con Lynis – Estado Inicial
@@ -445,7 +447,7 @@ sudo ls -lh /root/backups
  
 ---
  
-## Incidencias y Problemas Encontrados
+## 23. Incidencias y Problemas Encontrados
  
 ### Incompatibilidad de ModSecurity con Nginx
  
