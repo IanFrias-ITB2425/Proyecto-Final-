@@ -144,7 +144,8 @@ sudo docker logs cyberarena_dvwa 2>&1 | grep "vulnerabilities/xss_d"
 
 > **Captura — Logs con peticiones XSS y SQLi:**
 >
-> ![XSS logs](screenshots/08-xss-sqli-logs.png)
+> ![XSS logs](../Imagenes%20Laboratotio/vulbrut.png)
+> ![XSS logs](../Imagenes%20Laboratotio/vulexec.png)
 
 ---
 
@@ -164,7 +165,7 @@ Payload XSS inyectado en el buscador — servidor responde `403 Forbidden`:
 
 > **Captura — 403 Forbidden ante payload XSS:**
 >
-> ![Juice Shop XSS](../Imagenes%20Laboratotio/xssforbiden.png))
+> ![Juice Shop XSS](../Imagenes%20Laboratotio/xssforbiden.png)
 
 ---
 
