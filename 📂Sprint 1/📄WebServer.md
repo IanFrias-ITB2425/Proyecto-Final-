@@ -52,17 +52,6 @@ Se ha desplegado una instancia **t3.micro** en la región de AWS correspondiente
 
 Se han definido las reglas del **Security Group** asociado a la instancia EC2. Este actúa como firewall virtual a nivel de red, controlando el tráfico de entrada (inbound) y salida (outbound) de la instancia.
 
-**Reglas de entrada configuradas:**
-
-| ID de la regla | Tipo | Protocolo | Puerto | Origen | Descripción |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `sgr-0d28d020c8e46aadc` | MYSQL/Aurora | TCP | 3306 | 10.0.0.0/16 | Acceso a Base de Datos (restringido a la red interna) |
-| `sgr-0f9f72b6ade085f3e` | Todos los ICMP IPv4 | ICMP | Todo | 10.0.0.0/16 | Protocolo de diagnóstico/ping interno |
-| `sgr-022f501dbdbd21212` | SSH | TCP | 22 | 0.0.0.0/0 | Acceso SSH para administración remota |
-| `sgr-0be835dea0f999ebe` | TCP personalizado | TCP | 8080 | 0.0.0.0/0 | Puerto de aplicación alternativo |
-| `sgr-0276c00c833a85834` | HTTP | TCP | 80 | 0.0.0.0/0 | Tráfico web público (HTTP) |
-| `sgr-02be82395088d96e6` | HTTPS | TCP | 443 | 0.0.0.0/0 | Tráfico web seguro (HTTPS) |
-
 ### Análisis de la configuración según captura
 
 Basado en la configuración visualizada en el panel de AWS, se destacan los siguientes puntos:
