@@ -25,6 +25,7 @@
 14. [Configuración del Virtual Host en Nginx](#14-configuración-del-virtual-host-en-nginx)
 15. [Dashboard de Control "CyberArena"](#15-dashboard-de-control-cyberarena)
 16. [Estructura Final de la Base de Datos](#16-estructura-final-de-la-base-de-datos)
+17. [17. Incidencias y Problemas Encontrados](#17-incidencias-y-problemas-encontrados)
 ---
  
 ## 1. Resumen de la Instancia AWS (EC2)
@@ -391,6 +392,27 @@ CREATE TABLE alertas_reales (
  
 ---
  
+
+## 17. Incidencias y Problemas Encontrados
+ 
+### Expiración de la suscripción AWS del centro educativo
+ 
+Durante el desarrollo del proyecto, la suscripción de AWS del centro educativo expiró de forma inesperada, lo que provocó la pérdida de acceso a todas las instancias EC2 y la eliminación de los recursos asociados (instancias, volúmenes, Security Groups y configuración de red).
+ 
+Esto obligó al equipo a rehacer desde cero toda la infraestructura del servidor web, repitiendo el proceso de despliegue completo descrito en esta documentación.
+ 
+Gracias a que esta documentación fue redactada de forma detallada durante el Sprint 1, el proceso de reconstrucción fue significativamente más rápido que el despliegue original. Cada paso estaba registrado con los comandos exactos, configuraciones y decisiones tomadas, lo que permitió replicar el entorno sin tener que investigar de nuevo ni improvisar.
+ 
+
+
+
+
+
+
+
+
+
+
  
 ## Resumen del Despliegue
  
@@ -419,13 +441,4 @@ Todos los servicios están configurados para iniciarse automáticamente con el s
  
 ---
  
-## Incidencias y Problemas Encontrados
- 
-### Expiración de la suscripción AWS del centro educativo
- 
-Durante el desarrollo del proyecto, la suscripción de AWS del centro educativo expiró de forma inesperada, lo que provocó la pérdida de acceso a todas las instancias EC2 y la eliminación de los recursos asociados (instancias, volúmenes, Security Groups y configuración de red).
- 
-Esto obligó al equipo a rehacer desde cero toda la infraestructura del servidor web, repitiendo el proceso de despliegue completo descrito en esta documentación.
- 
-Gracias a que esta documentación fue redactada de forma detallada durante el Sprint 1, el proceso de reconstrucción fue significativamente más rápido que el despliegue original. Cada paso estaba registrado con los comandos exactos, configuraciones y decisiones tomadas, lo que permitió replicar el entorno sin tener que investigar de nuevo ni improvisar.
- 
+
