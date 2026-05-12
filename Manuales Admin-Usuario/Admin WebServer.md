@@ -107,11 +107,11 @@ Si la IP pública de la instancia cambia (por reinicio del laboratorio AWS):
 
 1. Consultar la nueva IP en la consola de AWS EC2.
 2. Entrar en [https://www.duckdns.org](https://www.duckdns.org) con la cuenta del proyecto.
-3. Actualizar el registro `cyberarena-rehan` con la nueva IP.
+3. Actualizar el registro `cyberarena-admin` con la nueva IP.
 4. Verificar que el dominio resuelve correctamente:
 
 ```bash
-ping cyberarena-rehan.duckdns.org
+ping cyberarena-admin.duckdns.org
 ```
 
 ---
@@ -162,8 +162,8 @@ mysql -u arena_sys -p arena_db
 
 Si hay que rehacer la instancia por completo (por ejemplo, por expiración de la suscripción AWS), seguir en orden los documentos de documentación técnica:
 
-1. **_WebServer.md** — Despliegue del stack (Nginx, MariaDB, PHP, SSL, dominio)
-2. **_WebServer2.md** — Hardening y seguridad (SSH, WAF, Wazuh, backups, Lynis)
+1. **WebServer.md** — Despliegue del stack (Nginx, MariaDB, PHP, SSL, dominio)
+2. **WebServer2.md** — Hardening y seguridad (SSH, WAF, Wazuh, backups, Lynis)
 
 Ambos documentos tienen todos los comandos necesarios para replicar el entorno completo.
 
