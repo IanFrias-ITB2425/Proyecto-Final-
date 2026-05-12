@@ -81,7 +81,7 @@ Respuesta: `HTTP/1.1 200 OK`
 
 > **Captura — Respuesta HTTP del servidor:**
 >
-> ![curl check](screenshots/04-curl-check.png)
+> ![curl check](../Imagenes%20Laboratotio/Curl.png)
 
 ---
 
@@ -98,7 +98,7 @@ Acceder a `/setup.php` y pulsar **"Create / Reset Database"** para inicializar l
 
 > **Captura — Pantalla de Database Setup:**
 >
-> ![DVWA setup](screenshots/05-dvwa-setup.png)
+> ![DVWA setup](../Imagenes%20Laboratotio/DVWA.png)
 
 ---
 
@@ -110,7 +110,7 @@ Acceder a `/setup.php` y pulsar **"Create / Reset Database"** para inicializar l
 
 > **Captura — Juice Shop en el navegador:**
 >
-> ![Juice Shop](screenshots/06-juiceshop-web.png)
+> ![Juice Shop](../Imagenes%20Laboratotio/JuiceShop.png)
 
 ---
 
