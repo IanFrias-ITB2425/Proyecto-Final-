@@ -176,14 +176,6 @@ El agente envía eventos al servidor Wazuh en la IP interna `10.0.1.96` por el p
 
 Antes de aplicar las medidas de hardening, se realizó una auditoría inicial con Lynis 3.0.9 que arrojó un **Hardening Index de 66**, con 266 pruebas realizadas.
 
-**Resultado comparativo:**
-
-| Métrica | Antes | Después |
-|---|---|---|
-| Hardening Index | **66** | **73** |
-| Tests realizados | 266 | 267 |
-
-Esta mejora de **7 puntos** refleja el impacto positivo de las configuraciones aplicadas.
 
 ![Lynis Estado Inicial](../Imagenes/25.png)
 
@@ -310,6 +302,15 @@ Con esta configuración, tras **3 intentos fallidos** de autenticación, la IP q
 ## 17. Auditoría con Lynis (Estado Final)
 
 Tras aplicar todas las medidas de hardening, se ejecutó Lynis 3.0.9 y se obtuvo un **Hardening Index de 73**, con 267 pruebas realizadas y 1 plugin habilitado.
+
+**Resultado comparativo:**
+
+| Métrica | Antes | Después |
+|---|---|---|
+| Hardening Index | **66** | **73** |
+| Tests realizados | 266 | 267 |
+
+Esta mejora de **7 puntos** refleja el impacto positivo de las configuraciones aplicadas.
 
 **Componentes activos:**
 - Firewall: ✅
