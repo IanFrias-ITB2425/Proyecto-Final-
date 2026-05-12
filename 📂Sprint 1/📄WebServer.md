@@ -52,7 +52,7 @@ Se ha desplegado una instancia **t3.micro** en la región de AWS correspondiente
 
 Se han definido las reglas del **Security Group** asociado a la instancia EC2. Este actúa como firewall virtual a nivel de red, controlando el tráfico de entrada (inbound) y salida (outbound) de la instancia.
 
-### Análisis de la configuración según captura
+### Análisis de la configuración
 
 Basado en la configuración visualizada en el panel de AWS, se destacan los siguientes puntos:
 
