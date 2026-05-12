@@ -35,27 +35,11 @@ sudo WAZUH_MANAGER='<IP_DEL_MANAGER>' \
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable wazuh-agent
-sudo systemctl start wazuh-agent
 ```
 
 ---
 
-### 3. Verificación del estado
-
-```bash
-sudo systemctl status wazuh-agent.service
-```
-
-El agente aparece como `active (running)` y reporta correctamente al manager:
-
-> **Captura — Wazuh agent activo y reportando:**
->
-> ![wazuh status](screenshots/11-wazuh-status.png)
-
----
-
-### 4. Comprobación de alertas generadas
+### 3. Comprobación de alertas generadas
 
 Con los contenedores del Sprint 1 activos y ejercicios en marcha, el agente Wazuh captura automáticamente los logs de los contenedores y los envía al manager. Desde el dashboard de Wazuh se pueden ver las alertas generadas por:
 
