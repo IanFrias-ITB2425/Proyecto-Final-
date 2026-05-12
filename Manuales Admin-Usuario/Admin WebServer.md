@@ -11,7 +11,7 @@ Este manual está destinado al responsable del Web Server para el mantenimiento,
 | Proveedor | AWS EC2 |
 | Tipo | `t3.micro` |
 | Sistema Operativo | Ubuntu 24.04 LTS |
-| Dominio | `cyberarena-rehan.duckdns.org` |
+| Dominio | `cyberarena-admin.duckdns.org` |
 | Raíz web | `/var/www/html` |
 | Base de datos | `arena_db` (MariaDB) |
 | Usuario BD aplicación | `arena_sys@localhost` |
