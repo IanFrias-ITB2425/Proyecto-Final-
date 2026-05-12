@@ -40,6 +40,7 @@ Para permitir que la subred privada del Honeypot tuviera salida a Internet (para
 3. Se instaló el paquete `iptables-persistent` para hacer las reglas persistentes tras los reinicios.
 
 ![Configuración Sysctl e iptables](../Imagenes/59.jpg)
+
 ![Persistencia de iptables](../Imagenes/60.png)
 
 ---
