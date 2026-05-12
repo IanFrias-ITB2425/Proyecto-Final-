@@ -1,5 +1,5 @@
 # 🏗️ Sprint 1: Arquitectura Base y Despliegue en AWS Cloud
-**Autor:** Ian Frías - Arquitecto de Sistemas
+
 
 El objetivo principal de este primer Sprint fue establecer los cimientos de la infraestructura **CyberArena** en AWS, garantizando una segmentación lógica de la red para aplicar el principio de Defensa en Profundidad.
 
