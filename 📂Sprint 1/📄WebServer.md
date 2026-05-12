@@ -417,11 +417,6 @@ Durante el desarrollo del proyecto, la suscripción de AWS del centro educativo 
  
 Esto obligó al equipo a rehacer desde cero toda la infraestructura del servidor web, repitiendo el proceso de despliegue completo descrito en esta documentación.
  
-**Impacto:**
-- Pérdida total del entorno de producción configurado durante el Sprint 1
-- Necesidad de reconfigurar la instancia EC2, el stack LAMP/LEMP, los certificados SSL y todas las medidas de hardening aplicadas
-**Resolución:**
- 
 Gracias a que esta documentación fue redactada de forma detallada durante el Sprint 1, el proceso de reconstrucción fue significativamente más rápido que el despliegue original. Cada paso estaba registrado con los comandos exactos, configuraciones y decisiones tomadas, lo que permitió replicar el entorno sin tener que investigar de nuevo ni improvisar.
  
 > Esta incidencia pone de manifiesto la importancia de mantener documentación técnica actualizada y detallada a lo largo de todo el proyecto, especialmente en entornos cloud donde los recursos pueden desaparecer de forma abrupta.
