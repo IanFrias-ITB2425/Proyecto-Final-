@@ -39,7 +39,7 @@ Para permitir que la subred privada del Honeypot tuviera salida a Internet (para
 2. Se aplicó una regla de NAT (Masquerade) con **iptables**.
 3. Se instaló el paquete `iptables-persistent` para hacer las reglas persistentes tras los reinicios.
 
-![Configuración Sysctl e iptables](../Imagenes/59.jpg)
+![Configuración Sysctl e iptables](../Imagenes/59.png)
 
 ![Persistencia de iptables](../Imagenes/60.png)
 
