@@ -145,7 +145,6 @@ sudo docker logs cyberarena_dvwa 2>&1 | grep "vulnerabilities/xss_d"
 > **Captura — Logs con peticiones XSS y SQLi:**
 >
 > ![XSS logs](../Imagenes%20Laboratotio/vulbrut.png)
-> ![XSS logs](../Imagenes%20Laboratotio/vulexec.png)
 
 ---
 
