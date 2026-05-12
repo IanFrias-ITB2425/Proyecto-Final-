@@ -7,7 +7,7 @@ Este documento detalla la infraestructura de red y seguridad desplegada en AWS C
 ## 🖼️ Diagrama de la Arquitectura
 
 ![Arquitectura CyberArena](Imagenes/Arquitectura.png)
-*Visualización de la topología nativa en la nube con aislamiento del Red Team.*
+
 
 ---
 
