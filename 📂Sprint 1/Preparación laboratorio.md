@@ -128,7 +128,7 @@ Resultado: volcado completo del fichero `/etc/passwd` del contenedor.
 
 > **Captura — Command Injection con lectura de `/etc/passwd`:**
 >
-> ![command injection](screenshots/07-command-injection.png)
+> ![command injection](../Imagenes%20Laboratotio/payload.png)
 
 ---
 
@@ -139,6 +139,8 @@ Peticiones XSS confirmadas en los logs del contenedor:
 ```bash
 sudo docker logs cyberarena_dvwa 2>&1 | grep "vulnerabilities/xss_d"
 ```
+
+> ![command injection](../Imagenes%20Laboratotio/vulxss.png)
 
 > **Captura — Logs con peticiones XSS y SQLi:**
 >
@@ -162,7 +164,7 @@ Payload XSS inyectado en el buscador — servidor responde `403 Forbidden`:
 
 > **Captura — 403 Forbidden ante payload XSS:**
 >
-> ![Juice Shop XSS](screenshots/09-juiceshop-xss-forbidden.png)
+> ![Juice Shop XSS](../Imagenes%20Laboratotio/xssforbiden.png))
 
 ---
 
