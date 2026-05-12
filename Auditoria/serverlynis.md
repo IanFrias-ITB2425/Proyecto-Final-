@@ -805,3 +805,14 @@ lynis --upload
 ---
  
 *Informe generado a partir de la auditoría de Lynis 3.0.9 ejecutada el 11 de mayo de 2026 sobre el host `ip-10-0-1-225` (Ubuntu 24.04 LTS). Para más información sobre los controles de seguridad, consultar [https://cisofy.com/lynis/](https://cisofy.com/lynis/).*
+
+
+## Resumen
+ 
+La auditoría con Lynis 3.0.9 sobre el servidor `ip-10-0-1-225` (Ubuntu 24.04 LTS) arrojó un **Hardening Index final de 73/100** tras aplicar las medidas de hardening, partiendo de un índice inicial de 66.
+ 
+Las mejoras más significativas vinieron de endurecer la configuración SSH (`MaxAuthTries`, `LogLevel VERBOSE`, sin reenvío TCP ni X11), aplicar política de contraseñas con caducidad y rondas de hash elevadas, añadir parámetros de red al kernel para prevenir ataques MITM, e instalar ModSecurity como WAF con el OWASP CRS activo en modo bloqueo.
+ 
+Quedan pendientes de abordar las 2 advertencias activas (banner legal y fortaleza de contraseñas PAM) y las sugerencias más relevantes: habilitar `auditd`, configurar logging externo, deshabilitar protocolos de red innecesarios (`dccp`, `sctp`, `rds`, `tipc`) y añadir sandboxing a los servicios críticos como `nginx`, `mariadb` y `ssh` mediante directivas de systemd.
+ 
+Es importante tener en cuenta que el hardening tiene un límite práctico: cuanto más se restringe el sistema, más difícil se vuelve no solo entrar para un atacante, sino también para los propios administradores y los servicios que corren en el servidor. Aplicar todas las sugerencias de Lynis sin criterio puede romper funcionalidades, dejar servicios inaccesibles o hacer inoperable el servidor. Cada medida debe evaluarse en el contexto del entorno, priorizando las que aportan más seguridad con menos impacto operativo.
