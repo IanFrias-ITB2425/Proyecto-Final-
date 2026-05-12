@@ -27,7 +27,7 @@ sudo WAZUH_MANAGER='<IP_DEL_MANAGER>' \
 
 > **Captura — Descarga e instalación del paquete `.deb`:**
 >
-> ![wazuh install](screenshots/10-wazuh-install.png)
+> ![wazuh install](../Imagenes%20Laboratotio/aptwazuh.png)
 
 ---
 
