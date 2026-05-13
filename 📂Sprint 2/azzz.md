@@ -39,7 +39,7 @@ Una vez dentro de la terminal de AWS, procedimos con la descarga e instalación 
 
 _Descargar y ejecutar el instalador automatizado:_  
 ```bash
-curl -sO https://packages.wazuh.com/4.14/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
+ curl -sO https://packages.wazuh.com/4.14/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
 ```
 
 Una vez finalizada la descarga y descompresión de los archivos, el instalador nos proporcionó las credenciales de acceso del perfil administrativo, las cuales utilizaríamos para acceder a Wazuh y poder gestionarlo:
@@ -101,7 +101,7 @@ sudo dnf install iptables-nft -y
 
 Con el servidor maestro escuchando peticiones de red, entramos en las consolas de nuestros dos servidores (`server-web` y `honeypots`) para hacer que el agente local de Wazuh pueda recolectar los eventos internos de cada máquina.
 
-Para ello, es necesario acceder a la interfaz de Wazuh. Dentro de ella, abrimos el menú desplegable lateral y accedemos a **Server Manager** -> **Endpoints Summary**.
+Para ello hay que entrar en Wazuh. Dentro de él accederemos al desplegable lateral y entraremos dentro de Server Manager, en él aparecerá un desplegable y tendremos que entrar en la opción Endpoints Summary.
 
 ![[📸 Captura: Navegación hacia Endpoints Summary]](img-SOC-Wazuh/4.png)
 
@@ -233,7 +233,7 @@ Para vigilar con precisión absoluta e instantánea la aparición de troyanos, *
 </syscheck>
 ```
 
-**Justificación técnica de seguridad:** Al activar la propiedad `realtime="yes"`, los agentes remotos se enlazan directamente con las llamadas de interrupción del subsistema del kernel de Linux mediante la API `inotify`. Esto provoca el envío inmediato del hash SHA256 al servidor centralizado en el mismo milisegundo en el que un archivo toca el almacenamiento físico, aunando por completo la ventana de exposición latente de 12 horas establecida por defecto en la plataforma.
+Al activar la propiedad `realtime="yes"`, los agentes remotos se enlazan directamente con las llamadas de interrupción del subsistema del kernel de Linux mediante la API `inotify`. Esto provoca el envío inmediato del hash SHA256 al servidor centralizado en el mismo milisegundo en el que un archivo toca el almacenamiento físico, aunando por completo la ventana de exposición latente de 12 horas establecida por defecto en la plataforma.
 
 _Aplicar y consolidar las políticas modificadas reiniciando los agentes remotos:_  
 ```bash
@@ -291,7 +291,7 @@ Hacemos clic en la opción *Nuevo Webhook*, lo bautizamos como **Wazuh Bot**, co
 
 ## 7. Conexión con la API de Inteligencia Antivirus de VirusTotal
 
-La segunda API Key que integramos en el ecosistema es la correspondiente al servicio internacional de VirusTotal. Gracias a este módulo, si un atacante intenta inyectar, descargar o ejecutar código dañino dentro de los servicios locales y este coincide con una firma de malware registrada en la base de datos global de VirusTotal, el SIEM detendrá el flujo y alertará de forma inmediata tanto en la consola de Wazuh como en el canal operativo de Discord.
+La segunda API Key que integramos es la de VirusTotal. Gracias a esta API Key si alguien intenta introducir o un virus o ha descargado un virus dentro de los servicios y es algún virus conocido por la base de datos de VirusTotal lo detectará y nos enviará un aviso tanto a Wazuh como al Discord.
 
 Si se diera la situación de que un ciberdelincuente empleara un exploit inédito desarrollado a medida (*Zero-Day*), VirusTotal carecería de registros, pero los desencadenantes de comportamiento locales de Wazuh registrarían igualmente la intrusión. Al contar Wazuh con integración nativa directa con este servicio de inteligencia, el despliegue es altamente eficiente.
 
