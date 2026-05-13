@@ -147,11 +147,15 @@ Completados estos pasos, en la consola central de Wazuh aparecerá listado y act
 En este servidor el procedimiento es idéntico, adaptando los parámetros específicos para este nodo dentro del asistente de despliegue.
 
 * **Selección de S.O:** Linux DEB amd64
+![Instancia Central AWS](../img-SOC-Wazuh/12.png)
 * **Server Address:** `3.229.242.100`
+![Instancia Central AWS](../img-SOC-Wazuh/13.png)
+
 
 Como nombre identificativo para esta máquina virtual optamos por llamarla **Honeypots**, reflejando su función de albergar servicios controlados destinados a confundir y registrar los movimientos de atacantes externos.
 
-![Instancia Central AWS](../img-SOC-Wazuh/12.png)
+![Instancia Central AWS](../img-SOC-Wazuh/14.png)
+
 Una vez introducidos los datos específicos, ejecutamos el comando resultante dentro de la consola del servidor dedicado a los Honeypots:
 
 _Descargar el paquete deb oficial e instalar el agente asociándolo al nodo de monitorización:_  
@@ -168,8 +172,9 @@ sudo systemctl start wazuh-agent
 
 Una vez ejecutadas las instrucciones dentro de la máquina cliente, comprobamos en el panel de control central que el nuevo nodo ha quedado vinculado de forma exitosa.
 
-![Instancia Central AWS](../img-SOC-Wazuh/12.png)
-![Instancia Central AWS](../img-SOC-Wazuh/14.png)
+![Instancia Central AWS](../img-SOC-Wazuh/15.png)
+![Instancia Central AWS](../img-SOC-Wazuh/16.png)
+
 ---
 
 ## 4. Extracción Activa de Logs de Contenedores Docker
@@ -196,7 +201,7 @@ Editamos el archivo de configuración local del agente `/var/ossec/etc/ossec.con
 </localfile>
 ```
 
-![[📸 Captura: Bloques localfile en ossec.conf del Honeypot]](img-SOC-Wazuh/15.png)
+![Instancia Central AWS](../img-SOC-Wazuh/17.png)
 
 ---
 
@@ -247,27 +252,31 @@ Para conseguir visibilidad total e instantánea ante cualquier vector de ataque 
 
 1. Creamos el canal de texto `#alertas-wazuh` en nuestro servidor privado de Discord y generamos un Webhook de integración.
 
-![[📸 Captura: Creación de Integración de Discord 1]](img-SOC-Wazuh/16.png)  
-![[📸 Captura: Creación de Integración de Discord 2]](img-SOC-Wazuh/17.png)
+![Instancia Central AWS](../img-SOC-Wazuh/18.png)  
+![Instancia Central AWS](../img-SOC-Wazuh/19.png)
 
 Definimos un nombre identificativo para la integración, en este caso configurado como **SOC - Wazuh Alerts**.
 
-![[📸 Captura: Nombre asignado al Bot]](img-SOC-Wazuh/16.png)
+![Instancia Central AWS](../img-SOC-Wazuh/20.png)
 
 Añadimos el nuevo canal dedicado bajo el nombre `alertas-wazuh`. Para ello, pulsamos el botón **+** ubicado en el bloque de canales de texto.
 
 Establecemos la tipología de canal como **Texto** e introducimos el nombre seleccionado. En escenarios corporativos reales, resulta idóneo activar la casilla de **Canal Privado**, asegurando que únicamente los analistas de seguridad explíitamente autorizados por el administrador puedan visualizar los reportes de incidentes, aislando los datos críticos del resto de departamentos.
 
-![[📸 Captura: Panel de Creación de Canal de Texto]](img-SOC-Wazuh/19.png)
+![Instancia Central AWS](../img-SOC-Wazuh/21.png)
+
 
 Consolidado el canal, accedemos a su configuración interna dentro del apartado de **Integraciones** para dar de alta y extraer las credenciales del Webhook encargado de enlazar el SIEM externo.
 
-![[📸 Captura: Panel de Configuración de Integración de Canal 1]](img-SOC-Wazuh/20.png)  
-![[📸 Captura: Panel de Configuración de Integración de Canal 2]](img-SOC-Wazuh/21.png)
+!![Instancia Central AWS](../img-SOC-Wazuh/22.png)
+
+![Instancia Central AWS](../img-SOC-Wazuh/23.png)
+
 
 Hacemos clic en la opción *Nuevo Webhook*, lo bautizamos como **Wazuh Bot**, copiamos la URL única asignada y guardamos las modificaciones.
 
-![[📸 Captura: Generación e Ingesta de URL Webhook]](img-SOC-Wazuh/22.png)
+![Instancia Central AWS](../img-SOC-Wazuh/24.png)
+
 
 2. **El bypass de compatibilidad:** Debido a que Wazuh cuenta de forma nativa con integración madura para los payloads de Slack pero carece de conector directo para Discord, aprovechamos la pasarela de compatibilidad de la API de Discord **añadiendo el sufijo `/slack` al final de la URL** generada en el paso anterior.
 
@@ -282,7 +291,7 @@ Hacemos clic en la opción *Nuevo Webhook*, lo bautizamos como **Wazuh Bot**, co
 </integration>
 ```
 
-![[📸 Captura: Bloque de Integración en ossec.conf del Manager]](img-SOC-Wazuh/23.png)
+![Instancia Central AWS](../img-SOC-Wazuh/25.png)
 
 ---
 
@@ -296,11 +305,11 @@ Si se diera la situación de que un ciberdelincuente empleara un exploit inédit
 
 En primer lugar, accedemos a la plataforma oficial de [virustotal.com](http://virustotal.com) y procedemos al alta de un perfil de auditoría para extraer la clave de comunicación (API Key).
 
-![[📸 Captura: Obtención de API Key en Perfil]](img-SOC-Wazuh/24.png)
+![[📸 Captura: Obtención de API Key en Perfil]](img-SOC-Wazuh/26.png)
 
 Dentro del panel de control de la API Key podemos realizar un seguimiento preciso de las cuotas de peticiones permitidas, análisis activos y métricas de consumo diario de la clave de confianza.
 
-![[📸 Captura: Estadísticas y Cuota de API Key]](img-SOC-Wazuh/25.png)
+![[📸 Captura: Estadísticas y Cuota de API Key]](img-SOC-Wazuh/27.png)
 
 ### 7.2 Implementación en Wazuh
 
@@ -315,7 +324,8 @@ Con la clave copiaba, accedemos al archivo principal del Manager en AWS ejecutan
 </virustotal>
 ```
 
-![[📸 Captura: Bloque virustotal inyectado en el Manager]](img-SOC-Wazuh/26.png)
+![Instancia Central AWS](../img-SOC-Wazuh/28.png)
+
 
 _Reiniciar el servicio maestro para habilitar el nuevo motor de escaneo:_  
 ```bash
@@ -334,7 +344,8 @@ Establecido el cerebro, nos trasladamos a las máquinas remotas cliente que dese
 </syscheck>
 ```
 
-![[📸 Captura: Estado por Defecto de Bloque Syscheck]](img-SOC-Wazuh/27.png)
+![Instancia Central AWS](../img-SOC-Wazuh/29.png)
+
 
 Para sincronizar la telemetría en tiempo real con VirusTotal, modificamos dicho bloque agregando las siguientes directivas avanzadas:
 
@@ -362,7 +373,8 @@ Tras realizar las modificaciones, el bloque FIM consolidado en los agentes remot
 </syscheck>
 ```
 
-![[📸 Captura: Fichero Syscheck Modificado Completo]](img-SOC-Wazuh/28.png)
+![Instancia Central AWS](../img-SOC-Wazuh/30.png)
+
 
 _Consolidar los cambios reiniciando los agentes remotos del entorno:_  
 ```bash
@@ -380,23 +392,21 @@ _Descargar el binario de prueba de malware estandarizado EICAR:_
 wget -P /tmp [https://secure.eicar.org/eicar.com](https://secure.eicar.org/eicar.com)
 ```
 
-![[📸 Captura: Ejecución de Descarga EICAR]](img-SOC-Wazuh/29.png)
+![Instancia Central AWS](../img-SOC-Wazuh/31.png)
 
 En el mismo segundo en el que el archivo toca el almacenamiento físico, el bot de Discord debe procesar la telemetría enviada por Wazuh y desplegar la alerta roja de detección de amenaza en el canal operativo.
 
-![[📸 Captura: Alerta Roja de VirusTotal Recibida en Discord]](img-SOC-Wazuh/30.png)
+![Instancia Central AWS](../img-SOC-Wazuh/32.png)
 
 Para examinar en detalle el incidente desde la consola centralizada de Wazuh, navegamos hacia la sección de **Threat Hunting** y seleccionamos el agente correspondiente a los `Honeypots`.
 
-![[📸 Captura: Navegación Dashboard de Amenazas]](img-SOC-Wazuh/31.png)
-
+![Instancia Central AWS](../img-SOC-Wazuh/33.png)
 En este panel disponemos de la cronología de eventos de seguridad. Al acceder al registro crítico catalogado como **Nivel de riesgo 12**, visualizamos los detalles asociados a la firma del archivo descargado.
 
-![[📸 Captura: Detalles de Registro Crítico Nivel 12]](img-SOC-Wazuh/32.png)
-
+![Instancia Central AWS](../img-SOC-Wazuh/34.png)
 Si seleccionamos la pestaña comparativa *Top 5*, el motor nos despliega con exactitud el nombre del ejecutable malicioso interceptado y su ruta absoluta dentro del host de destino.
 
-![[📸 Captura: Mapeo Top 5 de Amenaza e Ingesta de Rutas]](img-SOC-Wazuh/33.png)
+![Instancia Central AWS](../img-SOC-Wazuh/35.png)
 
 ---
 
@@ -410,11 +420,11 @@ En primer lugar, nos autenticamos en la plataforma web de Duck DNS mediante una 
 
 A continuación, reservamos el subdominio que utilizaremos de forma exclusiva para el proyecto, configurado en este caso bajo la dirección: **`wazuh-cyberarena`**.
 
-![[📸 Captura: Generación de Registro y Dominio Duck DNS]](img-SOC-Wazuh/34.png)
+![Instancia Central AWS](../img-SOC-Wazuh/36.png)
 
 Una vez reservada la dirección, el asistente despliega una casilla de enlace de red donde debemos inyectar la dirección IP pública de nuestra máquina virtual de AWS, forzando la redirección del tráfico de manera inmediata.
 
-![[📸 Captura: Vinculación de IP de AWS en Registro]](img-SOC-Wazuh/35.png)
+![Instancia Central AWS](../img-SOC-Wazuh/37.png)
 
 ### 8.2 Instalación de Certbot y Obtención del Certificado SSL
 
@@ -432,8 +442,8 @@ sudo certbot certonly --standalone -d wazuh-cyberarena.duckdns.org
 
 Durante la ejecución del asistente interactivo, introducimos el correo electrónico administrativo para notificaciones críticas, aceptamos las condiciones legales de la licencia presionando `Y` y declinamos el envío de publicidad externa. El cliente ACME completó las verificaciones con los servidores remotos y almacenó los archivos de claves de forma satisfactoria en la máquina host.
 
-![[📸 Captura: Proceso Interactivo del Asistente Certbot 1]](img-SOC-Wazuh/36.png)  
-![[📸 Captura: Proceso Interactivo del Asistente Certbot 2]](img-SOC-Wazuh/37.png)
+![Instancia Central AWS](../img-SOC-Wazuh/38.png)
+![Instancia Central AWS](../img-SOC-Wazuh/39.png)
 
 ---
 
@@ -475,7 +485,7 @@ uiSettings.overrides.defaultRoute: /app/wz-home
 opensearch_security.cookie.secure: true
 ```
 
-![[📸 Captura: Modificación de Rutas Criptográficas en Fichero]](img-SOC-Wazuh/38.png)
+![Instancia Central AWS](../img-SOC-Wazuh/40.png)
 
 _Reiniciar el servicio web para aplicar y levantar la interfaz bajo la nueva configuración segura:_  
 ```bash
@@ -484,7 +494,7 @@ sudo systemctl restart wazuh-dashboard
 
 A partir de este momento, la consola del SOC central queda expuesta de forma segura bajo el dominio completo de producción: **`https://wazuh-cyberarena.duckdns.org/app/login`**
 
-![[📸 Captura: Interfaz de Acceso del SOC Protegida con Candado SSL]](img-SOC-Wazuh/39.png)
+![Instancia Central AWS](../img-SOC-Wazuh/41.png)
 
 ---
 
@@ -499,7 +509,7 @@ Esto lo hemos hecho modificando el archivo nano /var/ossec/integrations/slack.py
 ssl._create_default_https_context = ssl._create_unverified_context
 ```
 
-![[📸 Captura: Inyección de Parche SSL en Script de Python]](img-SOC-Wazuh/40.png)
+![Instancia Central AWS](../img-SOC-Wazuh/42.png)
 
 ### 10.2 Restricción de Permisos UNIX
 
