@@ -38,7 +38,7 @@ Para implementar el cerebro de nuestro SOC (Security Operations Center), despleg
 
 **Nota sobre el incidente de hardware solucionado:** Durante la primera fase de compilación e instalación del motor indexador, detectamos una congelación total del sistema debido a la falta de espacio y desbordamiento de memoria RAM en entornos menores de 15 GB de disco. Para corregirlo de inmediato, aplicamos un escalado vertical pasando la instancia temporalmente a una tipología t3.large y ampliando el almacenamiento en bloque hasta los 30 GB SSD.
 
-![][image1]
+![Instancia Central AWS](../img-SOC-Wazuh/1.png)
 
 ## **2\. Configuración de Seguridad Perimetral (Security Group)**
 
