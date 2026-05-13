@@ -49,7 +49,7 @@ Una vez finalizada la descarga y descompresión de los archivos, el instalador n
 
 A partir de este momento, comprobamos que el clúster respondía tecleando la dirección IP asignada directamente en la barra del navegador: [https://3.229.242.100/](https://3.229.242.100/).
 
-![[📸 Captura: Acceso Inicial Interfaz Web por IP]](img-SOC-Wazuh/3.png)
+![Instancia Central AWS](../img-SOC-Wazuh/3.png)
 
 ---
 
@@ -62,7 +62,7 @@ _Instalar el paquete de utilidades de Wireguard en el sistema:_
 sudo dnf install wireguard-tools -y
 ```
 
-![[📸 Captura: Instalación de Paquetes Wireguard]](img-SOC-Wazuh/4.png)
+![Instancia Central AWS](../img-SOC-Wazuh/4.png)
 
 Ahora es necesario generar las credenciales criptográficas de comunicación:
 
@@ -86,7 +86,7 @@ AllowedIPs = 10.7.0.0/24
 PersistentKeepalive = 25
 ```
 
-![[📸 Captura: Fichero de Configuración wg0.conf]](img-SOC-Wazuh/5.png)
+![Instancia Central AWS](../img-SOC-Wazuh/5.png)
 
 **Solución a error de enrutamiento:** Al levantar la interfaz virtual se detectó el fallo crítico `iptables-restore: command not found` debido a que Amazon Linux 2023 carece de herramientas de red obsoletas de manera nativa. 
 
@@ -103,11 +103,11 @@ Con el servidor maestro escuchando peticiones de red, entramos en las consolas d
 
 Para ello hay que entrar en Wazuh. Dentro de él accederemos al desplegable lateral y entraremos dentro de Server Manager, en él aparecerá un desplegable y tendremos que entrar en la opción Endpoints Summary.
 
-![[📸 Captura: Navegación hacia Endpoints Summary]](img-SOC-Wazuh/6.png)
+![Instancia Central AWS](../img-SOC-Wazuh/6.png)
 
 Una vez dentro, pulsamos el botón **Deploy new agent**.
 
-![[📸 Captura: Botón Deploy New Agent]](img-SOC-Wazuh/7.png)
+![Instancia Central AWS](../img-SOC-Wazuh/7.png)
 
 ### 3.1 Servidor Web
 
@@ -115,15 +115,14 @@ La integración de Wazuh en cada máquina es personalizada y única, aunque el p
 
 Para el servidor web, como sistema operativo de destino seleccionamos un entorno Linux con arquitectura **DEB amd64**, debido a que el servidor web está montado sobre una distribución Ubuntu Desktop.
 
-![[📸 Captura: Selección Sistema Operativo Agente]](img-SOC-Wazuh/8.png)
-
+![Instancia Central AWS](../img-SOC-Wazuh/8.png)
 En el campo *Server Address* introducimos la dirección IP del servidor centralizado encargado de recolectar todos los registros (`3.229.242.100`).
 
-![[📸 Captura: Configuración IP del Manager]](img-SOC-Wazuh/9.png)
+![Instancia Central AWS](../img-SOC-Wazuh/9.png)
 
 En la sección **Optional Settings** asignamos un nombre descriptivo al agente. Tratándose del servidor web, optamos por el identificador **Servidor-Web**. Es necesario contemplar que a partir de este momento ningún otro agente del entorno podrá utilizar el mismo nombre.
 
-![[📸 Captura: Asignación de Nombre del Agente Web]](img-SOC-Wazuh/10.png)
+![Instancia Central AWS](../img-SOC-Wazuh/10.png)
 
 A continuación, accedemos a la máquina que deseamos monitorizar (el servidor web) y ejecutamos el comando personalizado generado de forma automática por el panel de control de Wazuh:
 
@@ -141,7 +140,7 @@ sudo systemctl start wazuh-agent
 
 Completados estos pasos, en la consola central de Wazuh aparecerá listado y activo el nuevo Endpoint con el nombre asignado.
 
-![[📸 Captura: Agente Servidor-Web Conectado]](img-SOC-Wazuh/11.png)
+![Instancia Central AWS](../img-SOC-Wazuh/11.png)
 
 ### 3.2 Servidor Honeypot
 
@@ -152,8 +151,7 @@ En este servidor el procedimiento es idéntico, adaptando los parámetros espec�
 
 Como nombre identificativo para esta máquina virtual optamos por llamarla **Honeypots**, reflejando su función de albergar servicios controlados destinados a confundir y registrar los movimientos de atacantes externos.
 
-![[📸 Captura: Asignación de Nombre Agente Honeypot]](img-SOC-Wazuh/12.png)
-
+![Instancia Central AWS](../img-SOC-Wazuh/12.png)
 Una vez introducidos los datos específicos, ejecutamos el comando resultante dentro de la consola del servidor dedicado a los Honeypots:
 
 _Descargar el paquete deb oficial e instalar el agente asociándolo al nodo de monitorización:_  
@@ -170,9 +168,8 @@ sudo systemctl start wazuh-agent
 
 Una vez ejecutadas las instrucciones dentro de la máquina cliente, comprobamos en el panel de control central que el nuevo nodo ha quedado vinculado de forma exitosa.
 
-![[📸 Captura: Vista General de Agente Vinculado 1]](img-SOC-Wazuh/13.png)  
-![[📸 Captura: Vista General de Agente Vinculado 2]](img-SOC-Wazuh/14.png)
-
+![Instancia Central AWS](../img-SOC-Wazuh/12.png)
+![Instancia Central AWS](../img-SOC-Wazuh/14.png)
 ---
 
 ## 4. Extracción Activa de Logs de Contenedores Docker
