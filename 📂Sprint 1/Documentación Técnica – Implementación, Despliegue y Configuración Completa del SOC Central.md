@@ -52,7 +52,10 @@ A nivel de red perimetral, definimos las reglas del **Security Group** asociado 
 * **Puerto 1515 (TCP):** Para registrar nuevos agentes.  
 * **Puerto 55000 (TCP):** Para la API de Wazuh.  
 * Y las reglas de salida es por **defaut 0.0.0.0**  
-  **![][image2]**
+
+
+
+![Instancia Central AWS](../img-SOC-Wazuh/2.png)
 
 
 ## **3\. Conexión Remota vía SSH**
