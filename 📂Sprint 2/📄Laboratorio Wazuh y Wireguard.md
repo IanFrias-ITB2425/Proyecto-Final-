@@ -4,7 +4,7 @@ En este sprint se conecta la máquina atacante al SIEM del equipo (Wazuh) y se c
 
 ---
 
-## Sprint 2 — Agente Wazuh (SIEM)
+## Agente Wazuh (SIEM)
 
 ### 1. Instalación
 
@@ -59,7 +59,7 @@ sudo docker logs cyberarena_dvwa 2>&1 | grep "POST /vulnerabilities/exec/"
 
 ---
 
-## Sprint 3 — Red VPN con WireGuard
+## Red VPN con WireGuard
 
 ### 1. Instalación
 
