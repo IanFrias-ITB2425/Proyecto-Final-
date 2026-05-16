@@ -10,9 +10,6 @@ El servidor principal de aplicaciones corre sobre una instancia optimizada de Ub
 | **Sistema Operativo** | Ubuntu 24.04 LTS 🐧 |
 | **Nombre de Host** | `ip-172-31-46-211` |
 
-![Resumen de Instancia EC2](assets/resumen-instancia.png)
-*Figura 4: Estado de ejecución y detalles de red del servidor web.*
-
 ---
 
 ## 🛠️ 2. Stack Tecnológico (LEMP)
@@ -25,9 +22,6 @@ Se ha configurado un entorno de alto rendimiento compuesto por:
 ### 🔐 Seguridad de Base de Datos
 Se eliminaron los usuarios anónimos y las bases de datos de prueba mediante `mysql_secure_installation`, asignando el usuario administrador `arena_sys`.
 
-![Instalación en Terminal](assets/instalacion-lemp.png)
-*Figura 5: Captura del proceso de instalación y despliegue de servicios.*
-
 ---
 
 ## 🧱 3. Fortificación WAF (ModSecurity)
@@ -38,4 +32,3 @@ Cambiamos el motor de reglas de "Solo detección" a "Bloqueo Activo":
 
 sudo sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/modsecurity/modsecurity.con
 
-Figura 6: Activación de las reglas de seguridad y motor de bloqueo.
