@@ -1,4 +1,4 @@
-# 🛡️ Sprint 2 & 3 — Agente Wazuh y VPN WireGuard
+# 🛡️ Agente Wazuh y VPN WireGuard
 
 En este sprint se conecta la máquina atacante al SIEM del equipo (Wazuh) y se configura el túnel VPN con WireGuard para poder trabajar desde casa.
 
