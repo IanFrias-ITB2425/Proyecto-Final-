@@ -1,4 +1,4 @@
-# 🚀 Sprints 2 & 3: Enrutamiento NAT, Resiliencia y VPN
+# 🚀 Enrutamiento NAT, Resiliencia y VPN
 
 Con la máquina base desplegada, el reto de estos sprints consistió en transformar el servidor Ubuntu en un **Router Perimetral y Servidor VPN** totalmente funcional, superando las limitaciones nativas de la nube y estableciendo un acceso seguro para el Red Team y el SOC.
 
