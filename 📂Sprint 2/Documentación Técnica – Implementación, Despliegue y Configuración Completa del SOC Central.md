@@ -305,11 +305,11 @@ Si se diera la situación de que un ciberdelincuente empleara un exploit inédit
 
 En primer lugar, accedemos a la plataforma oficial de [virustotal.com](http://virustotal.com) y procedemos al alta de un perfil de auditoría para extraer la clave de comunicación (API Key).
 
-![[📸 Captura: Obtención de API Key en Perfil]](img-SOC-Wazuh/26.png)
+![[📸 Captura: Obtención de API Key en Perfil]](../img-SOC-Wazuh/26.png)
 
 Dentro del panel de control de la API Key podemos realizar un seguimiento preciso de las cuotas de peticiones permitidas, análisis activos y métricas de consumo diario de la clave de confianza.
 
-![[📸 Captura: Estadísticas y Cuota de API Key]](img-SOC-Wazuh/27.png)
+![[📸 Captura: Estadísticas y Cuota de API Key]](../img-SOC-Wazuh/27.png)
 
 ### 7.2 Implementación en Wazuh
 
